@@ -6,7 +6,7 @@ function Header() {
   return (
     <div className="flex justify-between m-1">
       <div className="flex">
-        <img src={logo} alt="Logo" className="h-11" />
+        <img src={logo} alt="Logo" className="h-11 mr-3" />
         <div>
           <div>Customer</div>
           <div>Support</div>

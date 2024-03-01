@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-const CreateProject = () => {
+const CreateProject = ({ fetch, setFetch }) => {
   const [formData, setFormData] = useState({
     project_name: "",
     project_desc: "a",
@@ -24,12 +26,13 @@ const CreateProject = () => {
             project_scope: "",
             project_stack: "",
           });
-          alert("Project Created successfully ");
+          toast.success("Project Created successfully ");
+          setFetch((prev) => !prev);
         }
       });
     } catch (err) {
       if (err.response.status === 409) {
-        alert(err.response.data.message);
+        toast.error(err.response.data.message);
       }
       console.log(err);
     }

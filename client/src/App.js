@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import "monday-ui-react-core/tokens";
 import axios from "axios";
+import { ToastContainer } from "react-toastify";
 
 import "./App.css";
 import AuditorProjects from "./pages/auditor/AuditorProjects";
@@ -15,6 +16,7 @@ axios.defaults.withCredentials = true;
 function App() {
   return (
     <>
+      <ToastContainer />
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<AuditorDashboard />} />

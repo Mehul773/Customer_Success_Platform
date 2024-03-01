@@ -7,7 +7,7 @@ function Layout() {
   return (
     <div>
       <Header />
-      <div className="flex bg-bg_main_screen absolute bottom-0 w-full">
+      <div className="flex bg-bg_main_screen gap-4 ">
         <Sidebar />
         <Outlet />
       </div>
