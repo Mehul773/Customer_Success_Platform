@@ -18,7 +18,6 @@ const app = express();
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(cookieParser());
-console.log(process.env.CLIENT_URL);
 app.use(
   cors({
     origin: process.env.CLIENT_URL,

@@ -18,6 +18,14 @@ const ProjectSchema = new mongoose.Schema(
       type: String,
       require: true,
     },
+    project_status: {
+      type: String,
+      default: "In progress",
+    },
+    project_manager: {
+      type: String,
+      default: "Dipa majumdar",
+    },
   },
   { timestamps: true, versionKey: false }
 );

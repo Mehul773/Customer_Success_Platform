@@ -3,10 +3,10 @@ import axios from "axios";
 
 const CreateProject = () => {
   const [formData, setFormData] = useState({
-    project_name: "fff",
-    project_desc: "fff",
-    project_scope: "fff",
-    project_stack: "ffff",
+    project_name: "",
+    project_desc: "a",
+    project_scope: "a",
+    project_stack: "a",
   });
 
   const handleChange = (e) => {
@@ -16,14 +16,27 @@ const CreateProject = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("/project/create-project", formData);
+      await axios.post("/project/create-project", formData).then((res) => {
+        if (res.status == 200) {
+          setFormData({
+            project_name: "",
+            project_desc: "",
+            project_scope: "",
+            project_stack: "",
+          });
+          alert("Project Created successfully ");
+        }
+      });
     } catch (err) {
+      if (err.response.status === 409) {
+        alert(err.response.data.message);
+      }
       console.log(err);
     }
   };
 
   return (
-    <div>
+    <>
       <div className="max-w-md mx-auto mt-8">
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
@@ -88,7 +101,7 @@ const CreateProject = () => {
           </button>
         </form>
       </div>
-    </div>
+    </>
   );
 };
 
