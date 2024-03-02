@@ -8,6 +8,8 @@ const bodyParser = require("body-parser");
 
 /* ROUTERS */
 const projectRoutes = require("./routes/projectRoutes");
+const { sendMailToAll } = require("./controllers/emailController");
+const { downloadAllContent } = require("./controllers/downloadAsPdf");
 
 /* CONFIGURATIONS */
 dotenv.config();
@@ -34,3 +36,7 @@ connectDB();
 
 /* APIs */
 app.use("/project", projectRoutes);
+// SEND MAIL
+app.get("/send-mail", sendMailToAll);
+// DOWNLOAD ALL CONTENT
+app.get("/download-pdf", downloadAllContent);
