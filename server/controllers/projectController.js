@@ -89,7 +89,9 @@ const editProject = async (req, res, next) => {
 const fetchOneProject = async (req, res, next) => {
   const { id } = req.params;
   try {
-    const projectDoc = await Project.findById(id).populate("project_budget");
+    const projectDoc = await Project.findById(id)
+      .populate("project_budget")
+      .populate("project_risks");
     if (!projectDoc) {
       return res.status(409).json({ message: "Project does not exists" });
     }

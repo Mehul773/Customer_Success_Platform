@@ -32,6 +32,12 @@ const ProjectSchema = new mongoose.Schema(
         ref: "Budget",
       },
     ],
+    project_risks: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Risk",
+      },
+    ],
   },
   { timestamps: true, versionKey: false }
 );

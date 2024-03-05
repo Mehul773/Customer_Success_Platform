@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Button } from "monday-ui-react-core";
@@ -80,7 +80,7 @@ const Budget = ({ project, setFetch }) => {
         + Add budget
       </Button>
       {isModalOpen && (
-        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50">
+        <div className="fixed top-20 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50">
           <form
             onSubmit={handleSubmit}
             className="bg-bg_white text-bg_dark_font rounded-md shadow-lg shadow-bg_light_section border-2 border-bg_dark_section p-7 flex flex-col justify-center items-center gap-2"

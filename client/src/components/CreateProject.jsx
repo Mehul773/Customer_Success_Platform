@@ -86,7 +86,7 @@ const CreateProject = ({ fetch, setFetch }) => {
             <label className="block mb-1" htmlFor="project_stack">
               Project Stack
             </label>
-            <input
+            <select
               required
               type="text"
               id="project_stack"
@@ -94,7 +94,13 @@ const CreateProject = ({ fetch, setFetch }) => {
               value={formData.project_stack}
               onChange={handleChange}
               className={"w-full border rounded-md py-2 px-3"}
-            />
+            >
+              <option value="">Select</option>
+              <option value="Backend">Backend</option>
+              <option value="Frontend">Frontend</option>
+              <option value="Mobile App">Mobile App</option>
+              <option value="Database">Database</option>
+            </select>
           </div>
           <button
             type="submit"

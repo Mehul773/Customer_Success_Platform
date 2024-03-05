@@ -10,6 +10,7 @@ import {
 } from "monday-ui-react-core";
 import ProjectDetails from "../../components/ProjectDetails";
 import Budget from "../../components/Budget";
+import Risk from "../../components/Risk";
 
 function Project() {
   const { id } = useParams();
@@ -33,6 +34,7 @@ function Project() {
         <TabList>
           <Tab>Project Details</Tab>
           <Tab>Budget</Tab>
+          <Tab>Risk Profiling </Tab>
         </TabList>
         <h1 className="font-bold">Project Name: {project.project_name}</h1>
         <TabPanels>
@@ -43,6 +45,10 @@ function Project() {
           <TabPanel>
             {/* BUDGET COMPONENT  */}
             <Budget project={project} setFetch={setFetch} />
+          </TabPanel>
+          <TabPanel>
+            {/* RISK PROFILING COMPONENT  */}
+            <Risk project={project} setFetch={setFetch} />
           </TabPanel>
         </TabPanels>
       </TabsContext>
