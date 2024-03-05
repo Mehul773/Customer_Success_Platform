@@ -50,6 +50,12 @@ const ProjectSchema = new mongoose.Schema(
         ref: "Sprint",
       },
     ],
+    project_stackholder: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "StackHolder",
+      },
+    ],
   },
   { timestamps: true, versionKey: false }
 );

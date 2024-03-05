@@ -112,7 +112,7 @@ function EditPhase({ phase, setFetch }) {
                 type="date"
                 id="completionDate"
                 name="completionDate"
-                value={formData.startDate}
+                value={formData.completionDate}
                 onChange={handleChange}
                 className="w-full border rounded-md py-2 px-3"
               />

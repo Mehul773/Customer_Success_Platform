@@ -7,7 +7,7 @@ const downloadAllContent = async (req, res) => {
     // Create a new page
     const page = await browser.newPage();
 
-    // Example HTML content (you can replace this with the content of your HTML file)
+    // Example HTML content
     const htmlContent = `<!DOCTYPE html>
     <html lang="en">
       <head>

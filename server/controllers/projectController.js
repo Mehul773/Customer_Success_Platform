@@ -93,7 +93,8 @@ const fetchOneProject = async (req, res, next) => {
       .populate("project_budget")
       .populate("project_risks")
       .populate("project_phases")
-      .populate("project_sprints");
+      .populate("project_sprints")
+      .populate("project_stackholder");
     if (!projectDoc) {
       return res.status(409).json({ message: "Project does not exists" });
     }

@@ -14,12 +14,6 @@ const createSprint = async (req, res, next) => {
         .json({ message: "Project not found for this phase" });
     }
 
-    // IF SPRINT WITH SPRINT NUMBER ALREADY IN TABLE THEN RETURN
-    const sprintExist = await Sprint.findOne({ sprint });
-    if (sprintExist) {
-      return res.status(409).json({ message: "Sprint already exist" });
-    }
-
     const sprintDoc = await Sprint.create({
       sprint,
       startDate,
@@ -74,15 +68,6 @@ const editSprint = async (req, res, next) => {
 
     if (!sprintDoc) {
       return res.status(409).json({ message: "Sprint does not exist" });
-    }
-
-    // IF SPRINT WITH SPRINT NUMBER ALREADY IN TABLE THEN RETURN
-    const sprintExist = await Sprint.findOne({ sprint });
-
-    if (sprintExist && sprintExist._id != sprintDoc._id.toString()) {
-      return res
-        .status(409)
-        .json({ message: "Sprint already exist with this title" });
     }
 
     await sprintDoc.set({

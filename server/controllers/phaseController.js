@@ -22,12 +22,6 @@ const createPhase = async (req, res, next) => {
         .json({ message: "Project not found for this phase" });
     }
 
-    // IF PHASE WITH TITLE ALREADY IN TABLE THEN RETURN
-    const phaseExist = await Phase.findOne({ title });
-    if (phaseExist) {
-      return res.status(409).json({ message: "Phase already exist" });
-    }
-
     const phaseDoc = await Phase.create({
       title,
       startDate,
@@ -92,15 +86,6 @@ const editPhase = async (req, res, next) => {
 
     if (!phaseDoc) {
       return res.status(409).json({ message: "Phase does not exist" });
-    }
-
-    // IF PHASE WITH TITLE ALREADY IN TABLE THEN RETURN
-    const phaseExist = await Phase.findOne({ title });
-
-    if (phaseExist && phaseExist._id != phaseDoc._id.toString()) {
-      return res
-        .status(409)
-        .json({ message: "Phase already exist with this title" });
     }
 
     await phaseDoc.set({
