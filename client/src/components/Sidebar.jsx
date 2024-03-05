@@ -5,24 +5,26 @@ import { useNavigate } from "react-router-dom";
 function Sidebar() {
   const navtigate = useNavigate();
   return (
-    <div
-      className="w-56 bg-white rounded-md h-[90vh] mt-2 flex flex-col justify-start items-center gap-1"
-      onClick={() => navtigate("/projects")}
-    >
-      <Button className="w-4/5 mt-3">
-        <p className="text-left">+ Projects</p>
+    <div className="w-56 bg-white rounded-md h-[90vh] mt-2 flex flex-col justify-start items-center gap-1">
+      <Button
+        className="w-4/5 mt-3"
+        onClick={(e) => {
+          e.preventDefault();
+          navtigate("/projects");
+        }}
+      >
+        <p className="text-left"> Projects</p>
       </Button>
 
       <Button
         kind={Button.kinds.TERTIARY}
-        className="w-4/5 mt-4"
-        onClick={() => navtigate("/projects")}
+        className="w-4/5 "
+        onClick={(e) => {
+          e.preventDefault();
+          navtigate("/pm");
+        }}
       >
-        Projects
-      </Button>
-
-      <Button kind={Button.kinds.TERTIARY} className="w-4/5 ">
-        Project Managers
+        Stackholder
       </Button>
       <Button kind={Button.kinds.TERTIARY} className="w-4/5 ">
         Employees

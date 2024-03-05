@@ -31,6 +31,19 @@ const createStackholder = async (req, res, next) => {
   }
 };
 
+//DISPLAY ALL PROJECTS
+const displayStackholder = async (req, res, next) => {
+  try {
+    const stackholders = await StackHolder.find({});
+    if (stackholders) {
+      return res.status(200).json(stackholders);
+    }
+  } catch (error) {
+    console.log(error);
+    return res.json({ message: `Error occured ${error}` });
+  }
+};
+
 // DELETE STACKHOLDER
 const deleteStackholder = async (req, res, next) => {
   try {
@@ -84,4 +97,9 @@ const editStackholder = async (req, res, next) => {
   }
 };
 
-module.exports = { createStackholder, deleteStackholder, editStackholder };
+module.exports = {
+  createStackholder,
+  deleteStackholder,
+  editStackholder,
+  displayStackholder,
+};

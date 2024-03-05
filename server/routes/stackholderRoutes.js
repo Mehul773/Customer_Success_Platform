@@ -8,9 +8,12 @@ const {
   createStackholder,
   deleteStackholder,
   editStackholder,
+  displayStackholder,
 } = require("../controllers/stackholderController");
 
 /* APIs */
+router.get("/get-all-stackholder", displayStackholder);
+
 router.post("/create-stackholder/:project_id", createStackholder);
 
 router.delete(
