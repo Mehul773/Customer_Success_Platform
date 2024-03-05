@@ -91,7 +91,8 @@ const fetchOneProject = async (req, res, next) => {
   try {
     const projectDoc = await Project.findById(id)
       .populate("project_budget")
-      .populate("project_risks");
+      .populate("project_risks")
+      .populate("project_phases");
     if (!projectDoc) {
       return res.status(409).json({ message: "Project does not exists" });
     }

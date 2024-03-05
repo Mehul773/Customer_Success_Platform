@@ -39,8 +39,8 @@ const Budget = ({ project, setFetch }) => {
         .post(`/budget/create-budget/${project._id}`, formData)
         .then((res) => {
           if (res.status === 200) {
-            toast.success("Budget Created successfully ");
             setFetch((prev) => !prev);
+            toast.success("Budget Created successfully ");
             setFormData({
               type: "",
               duration: "",

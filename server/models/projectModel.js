@@ -38,6 +38,12 @@ const ProjectSchema = new mongoose.Schema(
         ref: "Risk",
       },
     ],
+    project_phases: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Phase",
+      },
+    ],
   },
   { timestamps: true, versionKey: false }
 );

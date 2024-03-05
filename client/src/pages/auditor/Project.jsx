@@ -11,6 +11,7 @@ import {
 import ProjectDetails from "../../components/ProjectDetails";
 import Budget from "../../components/Budget";
 import Risk from "../../components/Risk";
+import Phase from "../../components/Phase";
 
 function Project() {
   const { id } = useParams();
@@ -35,6 +36,7 @@ function Project() {
           <Tab>Project Details</Tab>
           <Tab>Budget</Tab>
           <Tab>Risk Profiling </Tab>
+          <Tab>Phases/Milestones </Tab>
         </TabList>
         <h1 className="font-bold">Project Name: {project.project_name}</h1>
         <TabPanels>
@@ -49,6 +51,10 @@ function Project() {
           <TabPanel>
             {/* RISK PROFILING COMPONENT  */}
             <Risk project={project} setFetch={setFetch} />
+          </TabPanel>
+          <TabPanel>
+            {/* PHASE PROFILING COMPONENT  */}
+            <Phase project={project} setFetch={setFetch} />
           </TabPanel>
         </TabPanels>
       </TabsContext>

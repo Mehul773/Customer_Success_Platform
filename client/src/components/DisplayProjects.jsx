@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import EditProject from "./EditProject";
 import { Link } from "react-router-dom";
+import { FaEye } from "react-icons/fa";
 
 function DisplayProjects({ fetch, setFetch }) {
   const [projects, setProjects] = useState([]);
@@ -63,18 +64,19 @@ function DisplayProjects({ fetch, setFetch }) {
                 className="bg-white border-b  hover:bg-gray-50 "
                 key={project._id}
               >
-                <Link to={`/project/${project._id}`}>
-                  <th
-                    scope="row"
-                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
-                  >
-                    {project.project_name}
-                  </th>
-                </Link>
+                <th
+                  scope="row"
+                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
+                >
+                  {project.project_name}
+                </th>
                 <td className="px-6 py-4">{project.project_stack}</td>
                 <td className="px-6 py-4">{project.project_status}</td>
                 <td className="px-6 py-4">{project.project_manager}</td>
-                <td className="px-6 py-4 text-right flex gap-2">
+                <td className="px-6 py-4 text-right flex gap-2 justify-center items-center">
+                  <Link to={`/project/${project._id}`}>
+                    <FaEye />
+                  </Link>
                   {/* EDITPROJECT COMPONENT FOR POP UP  */}
                   <EditProject project={project} setFetch={setFetch} />
                   <button
