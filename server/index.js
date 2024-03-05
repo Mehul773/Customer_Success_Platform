@@ -8,6 +8,7 @@ const bodyParser = require("body-parser");
 
 /* ROUTERS */
 const projectRoutes = require("./routes/projectRoutes");
+const budgetRoutes = require("./routes/budgetRoutes");
 const { sendMailToAll } = require("./controllers/emailController");
 const { downloadAllContent } = require("./controllers/downloadAsPdf");
 
@@ -36,6 +37,8 @@ connectDB();
 
 /* APIs */
 app.use("/project", projectRoutes);
+app.use("/budget", budgetRoutes);
+
 // SEND MAIL
 app.get("/send-mail", sendMailToAll);
 // DOWNLOAD ALL CONTENT

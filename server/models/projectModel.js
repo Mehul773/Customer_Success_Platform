@@ -4,19 +4,19 @@ const ProjectSchema = new mongoose.Schema(
   {
     project_name: {
       type: String,
-      require: true,
+      required: true,
     },
     project_desc: {
       type: String,
-      require: true,
+      required: true,
     },
     project_scope: {
       type: String,
-      require: true,
+      required: true,
     },
     project_stack: {
       type: String,
-      require: true,
+      required: true,
     },
     project_status: {
       type: String,
@@ -26,6 +26,12 @@ const ProjectSchema = new mongoose.Schema(
       type: String,
       default: "Dipa majumdar",
     },
+    project_budget: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Budget",
+      },
+    ],
   },
   { timestamps: true, versionKey: false }
 );

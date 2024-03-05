@@ -26,7 +26,7 @@ function Header() {
           type="img"
         />
         <div className="flex flex-col">
-          <div>Hadas Fahri</div>
+          <div>Bob</div>
           <div>User</div>
         </div>
       </div>

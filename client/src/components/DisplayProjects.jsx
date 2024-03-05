@@ -3,6 +3,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import EditProject from "./EditProject";
+import { Link } from "react-router-dom";
 
 function DisplayProjects({ fetch, setFetch }) {
   const [projects, setProjects] = useState([]);
@@ -56,18 +57,20 @@ function DisplayProjects({ fetch, setFetch }) {
           </tr>
         </thead>
         <tbody>
-          {projects.length > 0 &&
-            projects.map((project) => (
+          {projects?.length > 0 &&
+            projects?.map((project) => (
               <tr
                 className="bg-white border-b  hover:bg-gray-50 "
                 key={project._id}
               >
-                <th
-                  scope="row"
-                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
-                >
-                  {project.project_name}
-                </th>
+                <Link to={`/project/${project._id}`}>
+                  <th
+                    scope="row"
+                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
+                  >
+                    {project.project_name}
+                  </th>
+                </Link>
                 <td className="px-6 py-4">{project.project_stack}</td>
                 <td className="px-6 py-4">{project.project_status}</td>
                 <td className="px-6 py-4">{project.project_manager}</td>

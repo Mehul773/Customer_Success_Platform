@@ -3,17 +3,13 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-function EditProject({ project, setFetch }) {
+function EditBudget({ budget, setFetch }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [formData, setFormData] = useState({
-    project_id: project._id,
-    project_name: project.project_name,
-    project_desc: project.project_desc,
-    project_scope: project.project_scope,
-    project_stack: project.project_stack,
-    project_status: project.project_status,
-    project_manager: project.project_manager,
+    type: budget.type,
+    duration: budget.duration,
+    budgetedHours: budget.budgetedHours,
   });
 
   const openModal = () => {
@@ -28,16 +24,18 @@ function EditProject({ project, setFetch }) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  async function updateProject(e) {
+  async function updateBudget(e) {
     e.preventDefault();
     try {
-      await axios.put("/project/edit-project", formData).then((res) => {
-        if (res.status == 200) {
-          toast.success("Project Edited successfully ");
-          setFetch((prev) => !prev);
-          closeModal();
-        }
-      });
+      await axios
+        .put(`/budget/edit-budget/${budget._id}`, formData)
+        .then((res) => {
+          if (res.status === 200) {
+            toast.success("Budget Edited successfully ");
+            setFetch((prev) => !prev);
+            closeModal();
+          }
+        });
     } catch (err) {
       if (err.response.status === 409) {
         toast.error(err.response.data.message);
@@ -73,60 +71,55 @@ function EditProject({ project, setFetch }) {
           <div>
             <form
               className="bg-bg_white text-bg_dark_font rounded-md shadow-lg shadow-bg_light_section border-2 border-bg_dark_section p-7 flex flex-col justify-center items-center gap-2"
-              onSubmit={updateProject}
+              onSubmit={updateBudget}
             >
-              <div className="text-xl mb-4">Edit Project</div>
+              <div className="text-xl mb-4">Edit Budget</div>
 
-              <div className="w-full">
-                <label className=" mb-1" htmlFor="project_name">
-                  Project Name
+              <div className="mb-4 w-full">
+                <label className=" mb-1 block text-left" htmlFor="type">
+                  Type
+                </label>
+                <select
+                  required
+                  type="text"
+                  id="type"
+                  name="type"
+                  value={formData.type}
+                  onChange={handleChange}
+                  className={"w-full border rounded-md py-2 px-3 "}
+                >
+                  <option value="">Select </option>
+                  <option value="Fixed Budget">Fixed Budget </option>
+                  <option value="Monthly">Monthly </option>
+                </select>
+              </div>
+              <div className="mb-4">
+                <label className=" mb-1 block text-left" htmlFor="duration">
+                  Duration
                 </label>
                 <input
                   required
-                  type="text"
-                  id="project_name"
-                  name="project_name"
-                  value={formData.project_name}
+                  type="number"
+                  id="duration"
+                  name="duration"
+                  value={formData.duration}
                   onChange={handleChange}
                   className={"w-full border rounded-md py-2 px-3"}
                 />
               </div>
               <div className="mb-4">
-                <label className=" mb-1" htmlFor="project_desc">
-                  Project Description
-                </label>
-                <textarea
-                  id="project_desc"
-                  name="project_desc"
-                  value={formData.project_desc}
-                  onChange={handleChange}
-                  className={"w-full border rounded-md py-2 px-3"}
-                />
-              </div>
-              <div className="mb-4">
-                <label className=" mb-1" htmlFor="project_scope">
-                  Project Scope
+                <label
+                  className=" mb-1 block text-left"
+                  htmlFor="budgetedHours"
+                >
+                  Budgeted Hours
                 </label>
                 <input
                   required
-                  type="text"
-                  id="project_scope"
-                  name="project_scope"
-                  value={formData.project_scope}
-                  onChange={handleChange}
-                  className={"w-full border rounded-md py-2 px-3"}
-                />
-              </div>
-              <div className="mb-4">
-                <label className=" mb-1" htmlFor="project_stack">
-                  Project Stack
-                </label>
-                <input
-                  required
-                  type="text"
-                  id="project_stack"
-                  name="project_stack"
-                  value={formData.project_stack}
+                  type="number"
+                  id="budgetedHours"
+                  name="budgetedHours"
+                  value={formData.budgetedHours}
                   onChange={handleChange}
                   className={"w-full border rounded-md py-2 px-3"}
                 />
@@ -145,4 +138,4 @@ function EditProject({ project, setFetch }) {
   );
 }
 
-export default EditProject;
+export default EditBudget;

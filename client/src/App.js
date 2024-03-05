@@ -4,10 +4,10 @@ import axios from "axios";
 import { ToastContainer } from "react-toastify";
 
 import "./App.css";
-import AuditorProjects from "./pages/auditor/AuditorProjects";
 import AuditorDashboard from "./pages/auditor/AuditorDashboard";
 import Layout from "./components/Layout";
 import * as myConstants from "./myConstants";
+import Project from "./pages/auditor/Project";
 
 //Set base url of backend
 axios.defaults.baseURL = myConstants.BACKEND_URL;
@@ -19,8 +19,8 @@ function App() {
       <ToastContainer />
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route path="/" element={<AuditorDashboard />} />
-          <Route path="/auditor/projects" element={<AuditorProjects />} />
+          <Route path="/projects" element={<AuditorDashboard />} />
+          <Route path="/project/:id" element={<Project />} />
         </Route>
       </Routes>
     </>
