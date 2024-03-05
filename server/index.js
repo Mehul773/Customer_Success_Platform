@@ -11,6 +11,7 @@ const projectRoutes = require("./routes/projectRoutes");
 const budgetRoutes = require("./routes/budgetRoutes");
 const riskRoutes = require("./routes/riskRoutes");
 const phaseRoutes = require("./routes/phaseRoutes");
+const sprintRoutes = require("./routes/sprintRoutes");
 
 /* CONTROLLER */
 const { sendMailToAll } = require("./controllers/emailController");
@@ -44,6 +45,7 @@ app.use("/project", projectRoutes);
 app.use("/budget", budgetRoutes);
 app.use("/risk", riskRoutes);
 app.use("/phase", phaseRoutes);
+app.use("/sprint", sprintRoutes);
 
 // SEND MAIL
 app.get("/send-mail", sendMailToAll);

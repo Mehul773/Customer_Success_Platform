@@ -44,6 +44,12 @@ const ProjectSchema = new mongoose.Schema(
         ref: "Phase",
       },
     ],
+    project_sprints: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Sprint",
+      },
+    ],
   },
   { timestamps: true, versionKey: false }
 );
