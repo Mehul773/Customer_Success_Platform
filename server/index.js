@@ -52,4 +52,4 @@ app.use("/stackholder", stackholderRoutes);
 // SEND MAIL
 app.get("/send-mail", sendMailToAll);
 // DOWNLOAD ALL CONTENT
-app.get("/download-pdf", downloadAllContent);
+app.get("/download-pdf/:project_id", downloadAllContent);

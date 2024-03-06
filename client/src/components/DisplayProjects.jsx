@@ -5,10 +5,13 @@ import "react-toastify/dist/ReactToastify.css";
 import EditProject from "./EditProject";
 import { Link } from "react-router-dom";
 import { FaEye } from "react-icons/fa";
+import { FaDownload } from "react-icons/fa";
+import { saveAs } from "file-saver";
+import Loader from "../components/Loader";
 
 function DisplayProjects({ fetch, setFetch }) {
   const [projects, setProjects] = useState([]);
-
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     async function fetchData() {
       try {
@@ -33,6 +36,32 @@ function DisplayProjects({ fetch, setFetch }) {
         console.log(error);
       }
     }
+  }
+
+  // DOWNLOAD PROJECT AS PDF
+  const download = async (project_id) => {
+    setLoading(true);
+    try {
+      // Send a POST request to the backend server to convert the URL to PDF
+      const response = await axios.get(`/download-pdf/${project_id}`, {
+        responseType: "arraybuffer",
+      });
+
+      // Convert the array buffer received from the server to a Blob
+      const pdfBlob = new Blob([response.data], { type: "application/pdf" });
+
+      // Use file-saver to save the PDF file locally
+      saveAs(pdfBlob, "output.pdf");
+      setLoading(false);
+    } catch (error) {
+      // Handle errors if any occur during the conversion process
+      console.error("Error converting to PDF:", error);
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return <Loader />;
   }
 
   return (
@@ -74,6 +103,9 @@ function DisplayProjects({ fetch, setFetch }) {
                 <td className="px-6 py-4">{project.project_status}</td>
                 <td className="px-6 py-4">{project.project_manager}</td>
                 <td className="px-6 py-4 text-right flex gap-2 justify-center items-center">
+                  <button onClick={() => download(project._id)}>
+                    <FaDownload />
+                  </button>
                   <Link to={`/project/${project._id}`}>
                     <FaEye />
                   </Link>

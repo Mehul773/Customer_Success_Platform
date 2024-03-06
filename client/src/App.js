@@ -21,7 +21,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route path="/projects" element={<AuditorDashboard />} />
-          <Route path="/pm" element={<StackholderPage />} />
+          <Route path="/stackholders" element={<StackholderPage />} />
           <Route path="/project/:id" element={<Project />} />
         </Route>
       </Routes>

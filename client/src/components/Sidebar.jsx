@@ -21,7 +21,7 @@ function Sidebar() {
         className="w-4/5 "
         onClick={(e) => {
           e.preventDefault();
-          navtigate("/pm");
+          navtigate("/stackholders");
         }}
       >
         Stackholder
