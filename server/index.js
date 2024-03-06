@@ -14,6 +14,7 @@ const phaseRoutes = require("./routes/phaseRoutes");
 const sprintRoutes = require("./routes/sprintRoutes");
 const stackholderRoutes = require("./routes/stackholderRoutes");
 const auditHistoryRoutes = require("./routes/auditHistoryRoutes");
+const matrixRoutes = require("./routes/matrixRoutes");
 
 /* CONTROLLER */
 const { sendMailToAll } = require("./controllers/emailController");
@@ -50,6 +51,7 @@ app.use("/phase", phaseRoutes);
 app.use("/sprint", sprintRoutes);
 app.use("/stackholder", stackholderRoutes);
 app.use("/auditHistory", auditHistoryRoutes);
+app.use("/matrix", matrixRoutes);
 
 // SEND MAIL
 app.get("/send-mail/:project_id", sendMailToAll);

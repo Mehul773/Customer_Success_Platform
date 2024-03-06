@@ -7,6 +7,7 @@ import {
   Tab,
   TabPanels,
   TabPanel,
+  Loader,
 } from "monday-ui-react-core";
 import ProjectDetails from "../../components/ProjectDetails";
 import Budget from "../../components/Budget";
@@ -15,6 +16,9 @@ import Phase from "../../components/Phase";
 import Sprint from "../../components/Sprint";
 import Stackholder from "../../components/Stackholder";
 import AuditHistory from "../../components/AuditHistory";
+import OperationalMatrix from "../../components/OperationalMatrix";
+import FinancialMatrix from "../../components/FinancialMatrix";
+import TechnicalMatrix from "../../components/TechnicalMatrix";
 
 function Project() {
   const { id } = useParams();
@@ -32,6 +36,10 @@ function Project() {
     fetchOneProject();
   }, [fetch]);
 
+  if (!project) {
+    return <Loader />;
+  }
+
   return (
     <div className="w-full">
       <TabsContext>
@@ -43,6 +51,7 @@ function Project() {
           <Tab>Sprint wise detail </Tab>
           <Tab>Stckholder </Tab>
           <Tab>Audit History </Tab>
+          <Tab>Escalation Matrix </Tab>
         </TabList>
         <h1 className="font-bold">Project Name: {project.project_name}</h1>
         <TabPanels>
@@ -73,6 +82,14 @@ function Project() {
           <TabPanel>
             {/* AUDIT HISTORY COMPONENT  */}
             <AuditHistory project={project} setFetch={setFetch} />
+          </TabPanel>
+          <TabPanel>
+            {/* Escalation Matrix   COMPONENT  */}
+            <OperationalMatrix project={project} setFetch={setFetch} />
+            <hr />
+            <FinancialMatrix project={project} setFetch={setFetch} />
+            <hr />
+            <TechnicalMatrix project={project} setFetch={setFetch} />
           </TabPanel>
         </TabPanels>
       </TabsContext>

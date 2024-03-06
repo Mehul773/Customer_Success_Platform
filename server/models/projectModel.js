@@ -62,6 +62,24 @@ const ProjectSchema = new mongoose.Schema(
         ref: "AuditHistory",
       },
     ],
+    project_operational_matrix: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "OperationalMatrix",
+      },
+    ],
+    project_financial_matrix: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "FinancialMatrix",
+      },
+    ],
+    project_technical_matrix: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "TechnicalMatrix",
+      },
+    ],
   },
   { timestamps: true, versionKey: false }
 );
