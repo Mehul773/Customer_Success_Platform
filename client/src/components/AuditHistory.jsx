@@ -2,24 +2,20 @@ import axios from "axios";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Button } from "monday-ui-react-core";
-import EditStackholder from "./EditStackholder";
-import { MdEmail } from "react-icons/md";
-import Loader from "../components/Loader";
+import { Button, Loader } from "monday-ui-react-core";
+import EditAuditHistory from "./EditAuditHistory";
 
-function Stackholder({ project, setFetch }) {
-  const [loading, isLoading] = useState(false);
+function AuditHistory({ project, setFetch }) {
   const [formData, setFormData] = useState({
-    role: "PM",
-    name: "Mehul",
-    contact: "abc@gmail.com",
+    dateOfAudit: "",
+    reviewedBy: "xyz",
+    status: "Delayed",
+    comment: "xyz",
+    actionItem: "xyz",
   });
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  if (loading) {
-    return <Loader />;
-  }
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -35,23 +31,24 @@ function Stackholder({ project, setFetch }) {
     });
   };
   if (!project) {
-    console.log("Loading...");
-    return <div>Loading...</div>;
+    return <Loader color="var(--primary-color)" size={64} />;
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await axios
-        .post(`/stackholder/create-stackholder/${project._id}`, formData)
+        .post(`/auditHistory/create-auditHistory/${project._id}`, formData)
         .then((res) => {
           if (res.status === 200) {
-            toast.success("Sprint Created successfully ");
+            toast.success("Audit History Created successfully ");
             setFetch((prev) => !prev);
             setFormData({
-              role: "",
-              name: "",
-              contact: "",
+              dateOfAudit: "",
+              reviewedBy: "",
+              status: "",
+              comment: "",
+              actionItem: "",
             });
             closeModal();
           }
@@ -64,13 +61,13 @@ function Stackholder({ project, setFetch }) {
     }
   };
 
-  async function handleDelete(stackholder_id) {
+  async function handleDelete(auditHistory_id) {
     // eslint-disable-next-line no-restricted-globals
     var a = confirm("Do you want to delete? ");
     if (a) {
       try {
         const response = await axios.delete(
-          `/stackholder/delete-stackholder/${project._id}/${stackholder_id}`
+          `/auditHistory/delete-auditHistory/${project._id}/${auditHistory_id}`
         );
         toast.success(response.data.message);
         setFetch((prev) => !prev);
@@ -80,31 +77,17 @@ function Stackholder({ project, setFetch }) {
     }
   }
 
-  async function handleEmail() {
-    try {
-      const response = await axios.get(`/send-mail/${project._id}`);
-      toast.success(response.data.message);
-      setFetch((prev) => !prev);
-    } catch (error) {
-      toast.error(error.response.data.message);
-      console.log(error);
-    }
-  }
-
+  // Function to format the date to display only the date part
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-GB");
+  };
   return (
     <>
-      <div className="flex ">
-        {/* POP UP FOR ADD RISK  */}
-        <Button onClick={openModal} className="m-2">
-          + Add Stackholder
-        </Button>
-        <Button className="m-2" color="positive" onClick={handleEmail}>
-          <div className="mx-2">
-            <MdEmail />
-          </div>
-          Send project details to all cilent
-        </Button>
-      </div>
+      {/* POP UP FOR ADD AUDIT HISTORY  */}
+      <Button onClick={openModal} className="m-2">
+        + Add Audit history
+      </Button>
       {isModalOpen && (
         <div className="fixed top-40 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50">
           <form
@@ -112,49 +95,76 @@ function Stackholder({ project, setFetch }) {
             className="bg-bg_white text-bg_dark_font rounded-md shadow-lg shadow-bg_light_section border-2 border-bg_dark_section p-7 flex flex-col justify-center items-center gap-1"
           >
             <div className="mb-1 w-full">
-              <label className=" mb-1" htmlFor="role">
-                Role
-              </label>
-              <select
-                required
-                type="text"
-                id="role"
-                name="role"
-                value={formData.role}
-                onChange={handleChange}
-                className="w-full border rounded-md py-2 px-3"
-              >
-                <option value="">Select</option>
-                <option value="PM">PM</option>
-                <option value="Client">Client</option>
-                <option value="Account Manager">Account Manager</option>
-              </select>
-            </div>
-            <div className="mb-1 w-full">
-              <label className=" mb-1" htmlFor="name">
-                Name
+              <label className=" mb-1" htmlFor="dateOfAudit">
+                Date of Audit
               </label>
               <input
                 required
-                type="string"
-                min={0}
-                id="name"
-                name="name"
-                value={formData.name}
+                type="date"
+                id="dateOfAudit"
+                name="dateOfAudit"
+                value={formData.dateOfAudit}
                 onChange={handleChange}
                 className="w-full border rounded-md py-2 px-3"
               />
             </div>
             <div className="mb-1 w-full">
-              <label className=" mb-1" htmlFor="contact">
-                Email
+              <label className=" mb-1" htmlFor="reviewedBy">
+                Reviewed By
               </label>
               <input
                 required
-                type="email"
-                id="contact"
-                name="contact"
-                value={formData.contact}
+                type="text"
+                id="reviewedBy"
+                name="reviewedBy"
+                value={formData.reviewedBy}
+                onChange={handleChange}
+                className="w-full border rounded-md py-2 px-3"
+              />
+            </div>
+            <div className="mb-1 w-full">
+              <label className="mb-2 " htmlFor="status">
+                Status
+              </label>
+              <select
+                required
+                id="status"
+                name="status"
+                value={formData.status}
+                onChange={handleChange}
+                className="w-full border rounded-md py-2 px-3"
+              >
+                <option value="">Select</option>
+                <option value="Delayed">Delayed</option>
+                <option value="On-time">On-time</option>
+                <option value="Sign-off Pending">Sign-off Pending</option>
+                <option value="Sign-off">Sign-off</option>
+              </select>
+            </div>
+            <div className="mb-1 w-full">
+              <label className=" mb-1" htmlFor="comment">
+                Comment
+              </label>
+              <input
+                required
+                type="text"
+                id="comment"
+                name="comment"
+                value={formData.comment}
+                onChange={handleChange}
+                className="w-full border rounded-md py-2 px-3"
+              />
+            </div>
+            <div className="mb-1 w-full">
+              <label className=" mb-1" htmlFor="actionItem">
+                Action Item
+              </label>
+              <input
+                required
+                type="text"
+                id="actionItem"
+                name="actionItem"
+                value={formData.actionItem}
                 onChange={handleChange}
                 className="w-full border rounded-md py-2 px-3"
               />
@@ -177,40 +187,51 @@ function Stackholder({ project, setFetch }) {
           </form>
         </div>
       )}
-      {/* TABLE FOR DISPLAY PHASE  */}
+      {/* TABLE FOR DISPLAY AUDIT HISTORY  */}
       <table className="w-full text-sm text-left rtl:text-right text-gray-500 ">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50  ">
           <tr>
             <th scope="col" className="px-6 py-3">
-              Role
+              Date of Audit
             </th>
             <th scope="col" className="px-6 py-3">
-              Name
+              Reviewed By
             </th>
             <th scope="col" className="px-6 py-3">
-              Contact (Email)
+              Status
+            </th>
+            <th scope="col" className="px-6 py-3">
+              Comment
+            </th>
+            <th scope="col" className="px-6 py-3">
+              Action Item
             </th>
           </tr>
         </thead>
         <tbody>
-          {project?.project_stackholder?.length > 0 &&
-            project?.project_stackholder?.map((stackholder) => (
+          {project?.project_audit_history?.length > 0 &&
+            project?.project_audit_history?.map((auditHistory) => (
               <tr
                 className="bg-white border-b  hover:bg-gray-50 "
-                key={stackholder._id}
+                key={auditHistory._id}
               >
-                <th className="px-6 py-4  ">{stackholder.role}</th>
-                <th className="px-6 py-4  ">{stackholder.name}</th>
-                <th className="px-6 py-4  ">{stackholder.contact}</th>
+                <th className="px-6 py-4  ">
+                  {formatDate(auditHistory.dateOfAudit)}
+                </th>
+                <th className="px-6 py-4  ">{auditHistory.reviewedBy}</th>
+                <th className="px-6 py-4  ">{auditHistory.status}</th>
+                <th className="px-6 py-4  ">{auditHistory.comment}</th>
+                <th className="px-6 py-4  ">{auditHistory.actionItem}</th>
+
                 <td className="px-6 py-4 text-right flex gap-2">
                   {/* EDITSPRINT COMPONENT FOR POP UP  */}
-                  <EditStackholder
-                    stackholder={stackholder}
+                  <EditAuditHistory
+                    auditHistory={auditHistory}
                     setFetch={setFetch}
                   />
                   <button
                     className="text-red-600"
-                    onClick={() => handleDelete(stackholder._id)}
+                    onClick={() => handleDelete(auditHistory._id)}
                   >
                     Delete
                   </button>
@@ -223,4 +244,4 @@ function Stackholder({ project, setFetch }) {
   );
 }
 
-export default Stackholder;
+export default AuditHistory;

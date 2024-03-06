@@ -13,6 +13,7 @@ const riskRoutes = require("./routes/riskRoutes");
 const phaseRoutes = require("./routes/phaseRoutes");
 const sprintRoutes = require("./routes/sprintRoutes");
 const stackholderRoutes = require("./routes/stackholderRoutes");
+const auditHistoryRoutes = require("./routes/auditHistoryRoutes");
 
 /* CONTROLLER */
 const { sendMailToAll } = require("./controllers/emailController");
@@ -48,8 +49,9 @@ app.use("/risk", riskRoutes);
 app.use("/phase", phaseRoutes);
 app.use("/sprint", sprintRoutes);
 app.use("/stackholder", stackholderRoutes);
+app.use("/auditHistory", auditHistoryRoutes);
 
 // SEND MAIL
-app.get("/send-mail", sendMailToAll);
+app.get("/send-mail/:project_id", sendMailToAll);
 // DOWNLOAD ALL CONTENT
 app.get("/download-pdf/:project_id", downloadAllContent);

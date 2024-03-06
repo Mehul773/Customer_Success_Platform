@@ -14,6 +14,7 @@ import Risk from "../../components/Risk";
 import Phase from "../../components/Phase";
 import Sprint from "../../components/Sprint";
 import Stackholder from "../../components/Stackholder";
+import AuditHistory from "../../components/AuditHistory";
 
 function Project() {
   const { id } = useParams();
@@ -41,6 +42,7 @@ function Project() {
           <Tab>Phases/Milestones </Tab>
           <Tab>Sprint wise detail </Tab>
           <Tab>Stckholder </Tab>
+          <Tab>Audit History </Tab>
         </TabList>
         <h1 className="font-bold">Project Name: {project.project_name}</h1>
         <TabPanels>
@@ -67,6 +69,10 @@ function Project() {
           <TabPanel>
             {/* STCKHOLDER COMPONENT  */}
             <Stackholder project={project} setFetch={setFetch} />
+          </TabPanel>
+          <TabPanel>
+            {/* AUDIT HISTORY COMPONENT  */}
+            <AuditHistory project={project} setFetch={setFetch} />
           </TabPanel>
         </TabPanels>
       </TabsContext>

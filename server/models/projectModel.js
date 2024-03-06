@@ -56,6 +56,12 @@ const ProjectSchema = new mongoose.Schema(
         ref: "StackHolder",
       },
     ],
+    project_audit_history: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "AuditHistory",
+      },
+    ],
   },
   { timestamps: true, versionKey: false }
 );
