@@ -73,13 +73,13 @@ function DisplayProjects({ fetch, setFetch }) {
               Project name
             </th>
             <th scope="col" className="px-6 py-3">
+              Project Description
+            </th>
+            <th scope="col" className="px-6 py-3">
+              Scope
+            </th>
+            <th scope="col" className="px-6 py-3">
               Stack
-            </th>
-            <th scope="col" className="px-6 py-3">
-              Status
-            </th>
-            <th scope="col" className="px-6 py-3">
-              Project manager
             </th>
             <th scope="col" className="px-6 py-3">
               <span className="sr-only">Edit</span>
@@ -99,9 +99,9 @@ function DisplayProjects({ fetch, setFetch }) {
                 >
                   {project.project_name}
                 </th>
+                <td className="px-6 py-4">{project.project_desc}</td>
+                <td className="px-6 py-4">{project.project_scope}</td>
                 <td className="px-6 py-4">{project.project_stack}</td>
-                <td className="px-6 py-4">{project.project_status}</td>
-                <td className="px-6 py-4">{project.project_manager}</td>
                 <td className="px-6 py-4 text-right flex gap-2 justify-center items-center">
                   <button onClick={() => download(project._id)}>
                     <FaDownload />

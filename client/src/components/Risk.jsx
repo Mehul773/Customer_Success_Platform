@@ -7,13 +7,13 @@ import EditRisk from "./EditRisk";
 
 function Risk({ project, setFetch }) {
   const [formData, setFormData] = useState({
-    type: "Financial",
-    description: "cdsvc",
-    severity: "High",
-    impact: "High",
-    remedialSteps: "vfdv",
-    status: "cdscd",
-    closureDate: "2024-03-21",
+    type: "",
+    description: "",
+    severity: "",
+    impact: "",
+    remedialSteps: "",
+    status: "",
+    closureDate: "",
   });
 
   const [isModalOpen, setIsModalOpen] = useState(false);

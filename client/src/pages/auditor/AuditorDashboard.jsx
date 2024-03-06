@@ -16,17 +16,17 @@ function AuditorDashboard() {
       AuditorDashboard
       <TabsContext>
         <TabList>
+          <Tab>Display projects</Tab>
           <Tab>Create Project</Tab>
-          <Tab>Display project</Tab>
         </TabList>
         <TabPanels>
           <TabPanel>
-            {/* Create ptoject component  */}
-            <CreateProject fetch={fetch} setFetch={setFetch} />
-          </TabPanel>
-          <TabPanel>
             {/* Display ptoject component  */}
             <DisplayProjects fetch={fetch} setFetch={setFetch} />
+          </TabPanel>
+          <TabPanel>
+            {/* Create ptoject component  */}
+            <CreateProject fetch={fetch} setFetch={setFetch} />
           </TabPanel>
         </TabPanels>
       </TabsContext>

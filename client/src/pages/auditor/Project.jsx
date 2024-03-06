@@ -10,7 +10,6 @@ import {
   Tab,
   TabPanels,
   TabPanel,
-  Loader,
 } from "monday-ui-react-core";
 import ProjectDetails from "../../components/ProjectDetails";
 import Budget from "../../components/Budget";
@@ -22,6 +21,7 @@ import AuditHistory from "../../components/AuditHistory";
 import OperationalMatrix from "../../components/OperationalMatrix";
 import FinancialMatrix from "../../components/FinancialMatrix";
 import TechnicalMatrix from "../../components/TechnicalMatrix";
+import Loader from "../../components/Loader";
 
 function Project() {
   const { id } = useParams();

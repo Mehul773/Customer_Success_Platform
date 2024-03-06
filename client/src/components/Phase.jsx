@@ -7,13 +7,13 @@ import EditPhase from "./EditPhase";
 
 function Phase({ project, setFetch }) {
   const [formData, setFormData] = useState({
-    title: "phase 1",
-    startDate: "2024-03-21",
-    completionDate: "2024-03-21",
-    approvalDate: "2024-03-21",
-    status: "Delayed",
-    revisedCompletionDate: "2024-03-21",
-    comments: "phase 1",
+    title: "",
+    startDate: "",
+    completionDate: "",
+    approvalDate: "",
+    status: "",
+    revisedCompletionDate: "",
+    comments: "",
   });
 
   const [isModalOpen, setIsModalOpen] = useState(false);

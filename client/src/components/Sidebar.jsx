@@ -24,14 +24,14 @@ function Sidebar() {
           navtigate("/stackholders");
         }}
       >
-        Stackholder
+        Stackholders
       </Button>
-      <Button kind={Button.kinds.TERTIARY} className="w-4/5 ">
+      {/* <Button kind={Button.kinds.TERTIARY} className="w-4/5 ">
         Employees
       </Button>
       <Button kind={Button.kinds.TERTIARY} className="w-4/5 ">
         Setting
-      </Button>
+      </Button> */}
     </div>
   );
 }

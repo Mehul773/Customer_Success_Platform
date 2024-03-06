@@ -20,11 +20,9 @@ const ProjectSchema = new mongoose.Schema(
     },
     project_status: {
       type: String,
-      default: "In progress",
     },
     project_manager: {
       type: String,
-      default: "Dipa majumdar",
     },
     project_budget: [
       {

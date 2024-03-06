@@ -7,11 +7,11 @@ import EditSprint from "./EditSprint";
 
 function Sprint({ project, setFetch }) {
   const [formData, setFormData] = useState({
-    sprint: "asdad",
+    sprint: "",
     startDate: "",
     endDate: "",
-    status: "asdad",
-    comments: "asdad",
+    status: "",
+    comments: "",
   });
 
   const [isModalOpen, setIsModalOpen] = useState(false);

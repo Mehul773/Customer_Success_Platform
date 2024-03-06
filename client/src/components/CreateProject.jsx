@@ -6,9 +6,9 @@ import "react-toastify/dist/ReactToastify.css";
 const CreateProject = ({ fetch, setFetch }) => {
   const [formData, setFormData] = useState({
     project_name: "",
-    project_desc: "a",
-    project_scope: "a",
-    project_stack: "a",
+    project_desc: "",
+    project_scope: "",
+    project_stack: "",
   });
 
   const handleChange = (e) => {

@@ -8,10 +8,10 @@ import EditAuditHistory from "./EditAuditHistory";
 function AuditHistory({ project, setFetch }) {
   const [formData, setFormData] = useState({
     dateOfAudit: "",
-    reviewedBy: "xyz",
-    status: "Delayed",
-    comment: "xyz",
-    actionItem: "xyz",
+    reviewedBy: "",
+    status: "",
+    comment: "",
+    actionItem: "",
   });
 
   const [isModalOpen, setIsModalOpen] = useState(false);
