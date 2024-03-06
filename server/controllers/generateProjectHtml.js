@@ -41,7 +41,7 @@ const generateProjectHtml = (projectDoc) => {
           </thead>
           <tbody>`;
   // Add data dynamically for audit history
-  projectDoc[0].project_audit_history.map((auditHistory) => {
+  projectDoc[0]?.project_audit_history.map((auditHistory) => {
     htmlContent += `
                     <tr>
                       <td>${formateDate(auditHistory.dateOfAudit)}</td>
@@ -69,7 +69,7 @@ const generateProjectHtml = (projectDoc) => {
           </thead>
           <tbody>`;
   // Add data dynamically for budget
-  projectDoc[0].project_budget.map((budget) => {
+  projectDoc[0]?.project_budget.map((budget) => {
     htmlContent += `
             <tr>
               <td>${budget.type}</td>
@@ -112,17 +112,17 @@ const generateProjectHtml = (projectDoc) => {
   
         <h1>Project Description</h1>
         <p>`;
-  htmlContent += projectDoc[0].project_desc;
+  htmlContent += projectDoc[0]?.project_desc;
   htmlContent += `</p>
   
         <h1>Scope</h1>
         <p>`;
-  htmlContent += projectDoc[0].project_scope;
+  htmlContent += projectDoc[0]?.project_scope;
   htmlContent += `</p>
   
         <h1>Project Stack (Tech)</h1>
         `;
-  htmlContent += projectDoc[0].project_stack;
+  htmlContent += projectDoc[0]?.project_stack;
   htmlContent += `</p>
   
         
@@ -139,7 +139,7 @@ const generateProjectHtml = (projectDoc) => {
           <tbody>
             `;
   // Add data dynamically for matric
-  projectDoc[0].project_operational_matrix.map((matrix) => {
+  projectDoc[0]?.project_operational_matrix.map((matrix) => {
     htmlContent += `
                               <tr>
                                 <td>${matrix.level}</td>
@@ -162,7 +162,7 @@ const generateProjectHtml = (projectDoc) => {
           <tbody>
             `;
   // Add data dynamically for matric
-  projectDoc[0].project_financial_matrix.map((matrix) => {
+  projectDoc[0]?.project_financial_matrix.map((matrix) => {
     htmlContent += `
                                         <tr>
                                           <td>${matrix.level}</td>
@@ -185,7 +185,7 @@ const generateProjectHtml = (projectDoc) => {
           <tbody>
             `;
   // Add data dynamically for matric
-  projectDoc[0].project_technical_matrix.map((matrix) => {
+  projectDoc[0]?.project_technical_matrix.map((matrix) => {
     htmlContent += `
                                         <tr>
                                           <td>${matrix.level}</td>
@@ -210,7 +210,7 @@ const generateProjectHtml = (projectDoc) => {
           </thead>
           <tbody>
             `;
-  projectDoc[0].project_stackholder.map((stackholder) => {
+  projectDoc[0]?.project_stackholder.map((stackholder) => {
     htmlContent += `
                     <tr>
                       <td>${stackholder.role}</td>
@@ -237,7 +237,7 @@ const generateProjectHtml = (projectDoc) => {
       </thead>
       <tbody>`;
 
-  projectDoc[0].project_risks.map((risk) => {
+  projectDoc[0]?.project_risks.map((risk) => {
     htmlContent += `
       <tr>
       <td>${risk.type}</td>
@@ -269,7 +269,7 @@ const generateProjectHtml = (projectDoc) => {
           <tbody>
             `;
 
-  projectDoc[0].project_phases.map((phase) => {
+  projectDoc[0]?.project_phases.map((phase) => {
     htmlContent += `
               <tr>
               <td>${phase.title}</td>
@@ -300,7 +300,7 @@ const generateProjectHtml = (projectDoc) => {
           <tbody>
             `;
 
-  projectDoc[0].project_sprints.map((mySprint) => {
+  projectDoc[0]?.project_sprints.map((mySprint) => {
     htmlContent += `
               <tr>
               <td>${mySprint.sprint}</td>
@@ -325,9 +325,6 @@ const generateProjectHtml = (projectDoc) => {
 };
 
 const generateAuditHistoryHtml = (projectDoc) => {
-  console.log("====================================");
-  console.log(projectDoc[0]);
-  console.log("====================================");
   const formateDate = (date) => {
     const newDate = new Date(date);
     return newDate.toLocaleDateString("en-GB");
@@ -368,7 +365,7 @@ const generateAuditHistoryHtml = (projectDoc) => {
           </thead>
           <tbody>`;
   // Add data dynamically for audit history
-  projectDoc[0].project_audit_history.map((auditHistory) => {
+  projectDoc[0]?.project_audit_history.map((auditHistory) => {
     htmlContent += `
                     <tr>
                       <td>${formateDate(auditHistory.dateOfAudit)}</td>
@@ -384,11 +381,6 @@ const generateAuditHistoryHtml = (projectDoc) => {
             
           </tbody>
         </table>
-  
-        
-  
-        <h1>Detailed timeline reference</h1>
-        <p>Provide timeline</p>
       </body>
     </html>
     `;

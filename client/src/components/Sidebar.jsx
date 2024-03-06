@@ -13,7 +13,7 @@ function Sidebar() {
           navtigate("/projects");
         }}
       >
-        <p className="text-left"> Projects</p>
+        <p className="text-left">+ Projects</p>
       </Button>
 
       <Button

@@ -1,9 +1,6 @@
 const nodemailer = require("nodemailer");
 const Project = require("../models/projectModel");
-const {
-  generateProjectHtml,
-  generateAuditHistoryHtml,
-} = require("./generateProjectHtml");
+const { generateAuditHistoryHtml } = require("./generateProjectHtml");
 
 const sendMailToAll = async (req, res) => {
   const { project_id } = req.params;
@@ -23,7 +20,6 @@ const sendMailToAll = async (req, res) => {
     return res.status(409).json({ message: "Project does not exists" });
   }
 
-  // const htmlContent = generateProjectHtml(projectDoc);
   const htmlContent = generateAuditHistoryHtml(projectDoc);
 
   //  Create a nodemailer transporter
@@ -37,7 +33,7 @@ const sendMailToAll = async (req, res) => {
   });
 
   let clients = [];
-  projectDoc[0].project_stackholder.map((user) => {
+  projectDoc[0]?.project_stackholder.map((user) => {
     if (user.role == "Client") {
       clients.push({
         name: user.name,
@@ -54,7 +50,7 @@ const sendMailToAll = async (req, res) => {
       html:
         "<p>Hello " +
         client.name +
-        ",</p><p>Please note that audit has been completed and here is the audit summary:</p>" +
+        ",</p><p>Please note that audit has been changed and here is the audit summary:</p>" +
         htmlContent +
         "<p>Thanks and Regards,</p><p>Promact Infotech Pvt Ltd</p>",
       text: `Hello ${client.name},\n\nPlease note that audit has been completed and here is the audit summary:\n\n\nThanks and Regards,\nPromact Infotech Pvt Ltd`,
@@ -67,8 +63,9 @@ const sendMailToAll = async (req, res) => {
       }
     });
   });
-
-  res.status(200).json({ message: "Email sent successfully" });
+  res
+    .status(200)
+    .json({ message: "Audit history changed. Email sent successfully" });
 };
 
 module.exports = { sendMailToAll };

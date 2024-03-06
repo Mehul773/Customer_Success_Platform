@@ -18,6 +18,6 @@ router.delete(
   deleteAuditHistory
 );
 
-router.put("/edit-auditHistory/:auditHistory_id", editAuditHistory);
+router.put("/edit-auditHistory/:project_id/:auditHistory_id", editAuditHistory);
 
 module.exports = router;

@@ -3,7 +3,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-function EditAuditHistory({ auditHistory, setFetch }) {
+function EditAuditHistory({ auditHistory, setFetch, project }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({
     dateOfAudit: auditHistory.dateOfAudit,
@@ -29,7 +29,10 @@ function EditAuditHistory({ auditHistory, setFetch }) {
     e.preventDefault();
     try {
       await axios
-        .put(`/auditHistory/edit-auditHistory/${auditHistory._id}`, formData)
+        .put(
+          `/auditHistory/edit-auditHistory/${project._id}/${auditHistory._id}`,
+          formData
+        )
         .then((res) => {
           if (res.status === 200) {
             toast.success("Audit history Edited successfully ");

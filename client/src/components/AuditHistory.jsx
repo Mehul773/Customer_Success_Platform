@@ -228,6 +228,7 @@ function AuditHistory({ project, setFetch }) {
                   <EditAuditHistory
                     auditHistory={auditHistory}
                     setFetch={setFetch}
+                    project={project}
                   />
                   <button
                     className="text-red-600"

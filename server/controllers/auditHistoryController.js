@@ -1,5 +1,6 @@
 const Project = require("../models/projectModel");
 const AuditHistory = require("../models/auditHistoryModel");
+const { sendMailToAll } = require("./emailController");
 
 // CREATE AUDIT HISTORY
 const createAuditHistory = async (req, res, next) => {
@@ -26,7 +27,9 @@ const createAuditHistory = async (req, res, next) => {
     projectDoc?.project_audit_history?.push(auditHistoryDoc._id);
     await projectDoc.save();
 
-    return res.status(200).json({ message: "AuditHistory created" });
+    //SEND EMAIL WHEN AUDIT IS CREATED
+    sendMailToAll(req, res);
+    // return res.status(200).json({ message: "AuditHistory created" });
   } catch (error) {
     console.log(error);
     return res.json({ message: `Error occurred ${error}` });
@@ -52,9 +55,12 @@ const deleteAuditHistory = async (req, res, next) => {
     await projectDoc.save();
     await AuditHistory.deleteOne({ _id: auditHistory_id });
 
-    return res
-      .status(200)
-      .json({ message: "AuditHistory deleted successfully" });
+    //SEND EMAIL WHEN AUDIT IS CREATED
+    sendMailToAll(req, res);
+
+    // return res
+    //   .status(200)
+    //   .json({ message: "AuditHistory deleted successfully" });
   } catch (error) {
     console.log(error);
     return res.json({ message: `Error occurred ${error}` });
@@ -83,9 +89,11 @@ const editAuditHistory = async (req, res, next) => {
     });
 
     await auditHistoryDoc.save();
-    return res
-      .status(200)
-      .json({ message: "AuditHistory edited successfully" });
+    //SEND EMAIL WHEN AUDIT IS CREATED
+    sendMailToAll(req, res);
+    // return res
+    //   .status(200)
+    //   .json({ message: "AuditHistory edited successfully" });
   } catch (error) {
     console.log(error);
     return res.json({ message: `Error occurred ${error}` });

@@ -1,6 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { FaDownload } from "react-icons/fa";
+import { saveAs } from "file-saver";
+
 import {
   TabsContext,
   TabList,
@@ -24,6 +27,8 @@ function Project() {
   const { id } = useParams();
   const [project, setProject] = useState({});
   const [fetch, setFetch] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     async function fetchOneProject() {
       try {
@@ -40,6 +45,32 @@ function Project() {
     return <Loader />;
   }
 
+  // DOWNLOAD PROJECT AS PDF
+  const download = async (project_id) => {
+    setLoading(true);
+    try {
+      // Send a POST request to the backend server to convert the URL to PDF
+      const response = await axios.get(`/download-pdf/${project_id}`, {
+        responseType: "arraybuffer",
+      });
+
+      // Convert the array buffer received from the server to a Blob
+      const pdfBlob = new Blob([response.data], { type: "application/pdf" });
+
+      // Use file-saver to save the PDF file locally
+      saveAs(pdfBlob, "output.pdf");
+      setLoading(false);
+    } catch (error) {
+      // Handle errors if any occur during the conversion process
+      console.error("Error converting to PDF:", error);
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
     <div className="w-full">
       <TabsContext>
@@ -53,7 +84,12 @@ function Project() {
           <Tab>Audit History </Tab>
           <Tab>Escalation Matrix </Tab>
         </TabList>
-        <h1 className="font-bold">Project Name: {project.project_name}</h1>
+        <div className="flex gap-3 items-center cursor-pointer">
+          <h1 className="font-bold">Project Name: {project.project_name}</h1>
+          <div onClick={() => download(project._id)}>
+            <FaDownload />
+          </div>
+        </div>
         <TabPanels>
           <TabPanel>
             {/* PROJECT DETAILS COMPONENT  */}
