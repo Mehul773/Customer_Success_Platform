@@ -1,9 +1,11 @@
 const nodemailer = require("nodemailer");
 const Project = require("../models/projectModel");
-const { generateProjectHtml } = require("./generateProjectHtml");
+const {
+  generateProjectHtml,
+  generateAuditHistoryHtml,
+} = require("./generateProjectHtml");
 
 const sendMailToAll = async (req, res) => {
-  console.log("agcjgwcku,gcli,agcwlib");
   const { project_id } = req.params;
 
   const projectDoc = await Project.find({ _id: project_id })
@@ -11,13 +13,18 @@ const sendMailToAll = async (req, res) => {
     .populate("project_risks")
     .populate("project_phases")
     .populate("project_sprints")
-    .populate("project_stackholder");
+    .populate("project_stackholder")
+    .populate("project_audit_history")
+    .populate("project_operational_matrix")
+    .populate("project_financial_matrix")
+    .populate("project_technical_matrix");
 
   if (!projectDoc) {
     return res.status(409).json({ message: "Project does not exists" });
   }
 
-  const htmlContent = generateProjectHtml(projectDoc);
+  // const htmlContent = generateProjectHtml(projectDoc);
+  const htmlContent = generateAuditHistoryHtml(projectDoc);
 
   //  Create a nodemailer transporter
   const transporter = nodemailer.createTransport({
@@ -47,7 +54,7 @@ const sendMailToAll = async (req, res) => {
       html:
         "<p>Hello " +
         client.name +
-        ",</p><p>Please review the project summary:</p>" +
+        ",</p><p>Please note that audit has been completed and here is the audit summary:</p>" +
         htmlContent +
         "<p>Thanks and Regards,</p><p>Promact Infotech Pvt Ltd</p>",
       text: `Hello ${client.name},\n\nPlease note that audit has been completed and here is the audit summary:\n\n\nThanks and Regards,\nPromact Infotech Pvt Ltd`,

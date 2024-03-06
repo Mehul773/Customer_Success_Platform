@@ -137,6 +137,7 @@ function OperationalMatrix({ project, setFetch }) {
             <th scope="col" className="px-6 py-3">
               Name
             </th>
+            <th scope="col" className="px-6 py-3"></th>
           </tr>
         </thead>
         <tbody>
