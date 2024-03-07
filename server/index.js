@@ -14,6 +14,7 @@ const phaseRoutes = require("./routes/phaseRoutes");
 const sprintRoutes = require("./routes/sprintRoutes");
 const stackholderRoutes = require("./routes/stackholderRoutes");
 const auditHistoryRoutes = require("./routes/auditHistoryRoutes");
+const versionHistoryRoutes = require("./routes/versionHistoryRoutes");
 const matrixRoutes = require("./routes/matrixRoutes");
 
 /* CONTROLLER */
@@ -51,6 +52,7 @@ app.use("/phase", phaseRoutes);
 app.use("/sprint", sprintRoutes);
 app.use("/stackholder", stackholderRoutes);
 app.use("/auditHistory", auditHistoryRoutes);
+app.use("/versionHistory", versionHistoryRoutes);
 app.use("/matrix", matrixRoutes);
 
 // SEND MAIL

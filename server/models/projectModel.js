@@ -78,6 +78,12 @@ const ProjectSchema = new mongoose.Schema(
         ref: "TechnicalMatrix",
       },
     ],
+    project_version_history: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "VersionHistory",
+      },
+    ],
   },
   { timestamps: true, versionKey: false }
 );

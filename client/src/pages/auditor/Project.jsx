@@ -22,6 +22,7 @@ import OperationalMatrix from "../../components/OperationalMatrix";
 import FinancialMatrix from "../../components/FinancialMatrix";
 import TechnicalMatrix from "../../components/TechnicalMatrix";
 import Loader from "../../components/Loader";
+import VersionHistory from "../../components/VersionHistory";
 
 function Project() {
   const { id } = useParams();
@@ -72,7 +73,7 @@ function Project() {
   }
 
   return (
-    <div className="w-full">
+    <div className="w-full mt-2">
       <TabsContext>
         <TabList>
           <Tab>Project Details</Tab>
@@ -82,6 +83,7 @@ function Project() {
           <Tab>Sprint wise detail </Tab>
           <Tab>Stckholder </Tab>
           <Tab>Audit History </Tab>
+          <Tab>Version History </Tab>
           <Tab>Escalation Matrix </Tab>
         </TabList>
         <div className="flex gap-3 items-center cursor-pointer">
@@ -118,6 +120,10 @@ function Project() {
           <TabPanel>
             {/* AUDIT HISTORY COMPONENT  */}
             <AuditHistory project={project} setFetch={setFetch} />
+          </TabPanel>
+          <TabPanel>
+            {/* Version HISTORY COMPONENT  */}
+            <VersionHistory project={project} setFetch={setFetch} />
           </TabPanel>
           <TabPanel>
             {/* Escalation Matrix   COMPONENT  */}
