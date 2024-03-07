@@ -20,6 +20,7 @@ function App() {
       <ToastContainer />
       <Routes>
         <Route path="/" element={<Layout />}>
+          <Route path="/" element={<AuditorDashboard />} />
           <Route path="/projects" element={<AuditorDashboard />} />
           <Route path="/stackholders" element={<StackholderPage />} />
           <Route path="/project/:id" element={<Project />} />

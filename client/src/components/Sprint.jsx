@@ -37,6 +37,10 @@ function Sprint({ project, setFetch }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (formData.startDate > formData.endDate) {
+      toast.error("Start date should be less or qual completional date");
+      return;
+    }
     try {
       await axios
         .post(`/sprint/create-sprint/${project._id}`, formData)

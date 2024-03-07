@@ -160,7 +160,7 @@ function EditRisk({ risk, setFetch }) {
               <label className=" mb-1" htmlFor="status">
                 Status
               </label>
-              <input
+              <select
                 required
                 type="text"
                 id="status"
@@ -168,7 +168,13 @@ function EditRisk({ risk, setFetch }) {
                 value={formData.status}
                 onChange={handleChange}
                 className="w-full border rounded-md py-2 px-3"
-              />
+              >
+                <option value="">Select</option>
+                <option value="Delayed">Delayed</option>
+                <option value="On-time">On-time</option>
+                <option value="Sign-off Pending">Sign-off Pending</option>
+                <option value="Sign-off">Sign-off</option>
+              </select>
             </div>
             <div className="mb-1 w-full">
               <label className=" mb-1" htmlFor="closureDate">

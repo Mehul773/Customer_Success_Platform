@@ -39,6 +39,15 @@ function Phase({ project, setFetch }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(formData.startDate, formData.completionDate);
+    if (formData.startDate > formData.completionDate) {
+      toast.error("Start date should be less or qual completional date");
+      return;
+    }
+    if (formData.startDate > formData.revisedCompletionDate) {
+      toast.error("Start date should be less or qual revised Completion Date ");
+      return;
+    }
     try {
       await axios
         .post(`/phase/create-phase/${project._id}`, formData)
@@ -137,7 +146,7 @@ function Phase({ project, setFetch }) {
                 type="date"
                 id="completionDate"
                 name="completionDate"
-                value={formData.startDate}
+                value={formData.completionDate}
                 onChange={handleChange}
                 className="w-full border rounded-md py-2 px-3"
               />

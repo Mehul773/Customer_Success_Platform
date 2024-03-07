@@ -27,6 +27,10 @@ function EditSprint({ sprint, setFetch }) {
 
   async function updateSprint(e) {
     e.preventDefault();
+    if (formData.startDate > formData.endDate) {
+      toast.error("Start date should be less or qual completional date");
+      return;
+    }
     try {
       await axios
         .put(`/sprint/edit-sprint/${sprint._id}`, formData)

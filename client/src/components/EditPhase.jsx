@@ -29,6 +29,14 @@ function EditPhase({ phase, setFetch }) {
 
   async function updatePhase(e) {
     e.preventDefault();
+    if (formData.startDate > formData.completionDate) {
+      toast.error("Start date should be less or qual completional date");
+      return;
+    }
+    if (formData.startDate > formData.revisedCompletionDate) {
+      toast.error("Start date should be less or qual revised Completion Date ");
+      return;
+    }
     try {
       await axios
         .put(`/phase/edit-phase/${phase._id}`, formData)
