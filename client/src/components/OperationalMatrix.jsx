@@ -5,7 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Button, Loader } from "monday-ui-react-core";
 import EditMatrix from "./EditMatrix";
 
-function OperationalMatrix({ project, setFetch }) {
+function OperationalMatrix({ project, setFetch, myUser }) {
   const [formData, setFormData] = useState({
     level: "",
     name: "",
@@ -71,103 +71,120 @@ function OperationalMatrix({ project, setFetch }) {
   }
   return (
     <>
-      <Button onClick={openModal} className="m-2">
-        + Add Operational Escalation Matrix
-      </Button>
-      {isModalOpen && (
-        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <form
-            onSubmit={handleSubmit}
-            className="bg-bg_white text-bg_dark_font rounded-md shadow-lg shadow-bg_light_section border-2 border-bg_dark_section p-7 flex flex-col justify-center items-center gap-2"
-          >
-            <div className="mb-4">
-              <label className="block mb-1" htmlFor="level">
-                Escalation Level
-              </label>
-              <input
-                required
-                type="text"
-                id="level"
-                name="level"
-                min="0"
-                value={formData.level}
-                onChange={handleChange}
-                className="w-full border rounded-md py-2 px-3"
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block mb-1" htmlFor="name">
-                Name
-              </label>
-              <input
-                required
-                type="text"
-                id="name"
-                name="name"
-                min="0"
-                value={formData.name}
-                onChange={handleChange}
-                className="w-full border rounded-md py-2 px-3"
-              />
-            </div>
+      {myUser && (
+        <>
+          {(myUser?.role === "Admin" || myUser?.role === "PM") && (
+            <Button onClick={openModal} className="m-2">
+              + Add Operational Escalation Matrix
+            </Button>
+          )}
 
-            <div>
-              <Button onClick={closeModal} className="mx-2 " color="negative">
-                Close
-              </Button>
-              <Button
-                type="submit"
-                className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
+          {isModalOpen && (
+            <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50">
+              <form
+                onSubmit={handleSubmit}
+                className="bg-bg_white text-bg_dark_font rounded-md shadow-lg shadow-bg_light_section border-2 border-bg_dark_section p-7 flex flex-col justify-center items-center gap-2"
               >
-                Save
-              </Button>
-            </div>
-          </form>
-        </div>
-      )}
-
-      {/* TABLE FOR DISPLAY Operational Escalation Matrix   */}
-      <h1 className="font-bold text-center">Operational Escalation Matrix </h1>
-      <table className="w-full text-sm text-left rtl:text-right text-gray-500 ">
-        <thead className="text-xs text-gray-700 uppercase bg-gray-50  ">
-          <tr>
-            <th scope="col" className="px-6 py-3">
-              Escalation Level
-            </th>
-            <th scope="col" className="px-6 py-3">
-              Name
-            </th>
-            <th scope="col" className="px-6 py-3"></th>
-          </tr>
-        </thead>
-        <tbody>
-          {project?.project_operational_matrix?.length > 0 &&
-            project?.project_operational_matrix?.map((matrix) => (
-              <tr
-                className="bg-white border-b  hover:bg-gray-50 "
-                key={matrix._id}
-              >
-                <th className="px-6 py-4  ">{matrix.level}</th>
-
-                <td className="px-6 py-4">{matrix.name}</td>
-                <td className="px-6 py-4 text-right flex gap-2">
-                  {/* EDITMATRIX COMPONENT FOR POP UP  */}
-                  <EditMatrix
-                    matrix={matrix}
-                    setFetch={setFetch}
-                    typeOfMatrix={"operational"}
+                <div className="mb-4">
+                  <label className="block mb-1" htmlFor="level">
+                    Escalation Level
+                  </label>
+                  <input
+                    required
+                    type="text"
+                    id="level"
+                    name="level"
+                    min="0"
+                    value={formData.level}
+                    onChange={handleChange}
+                    className="w-full border rounded-md py-2 px-3"
                   />
-                  <button
-                    className="text-red-600"
-                    onClick={() => handleDelete(matrix._id)}
+                </div>
+                <div className="mb-4">
+                  <label className="block mb-1" htmlFor="name">
+                    Name
+                  </label>
+                  <input
+                    required
+                    type="text"
+                    id="name"
+                    name="name"
+                    min="0"
+                    value={formData.name}
+                    onChange={handleChange}
+                    className="w-full border rounded-md py-2 px-3"
+                  />
+                </div>
+
+                <div>
+                  <Button
+                    onClick={closeModal}
+                    className="mx-2 "
+                    color="negative"
                   >
-                    Delete
-                  </button>
-                </td>
+                    Close
+                  </Button>
+                  <Button
+                    type="submit"
+                    className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
+                  >
+                    Save
+                  </Button>
+                </div>
+              </form>
+            </div>
+          )}
+
+          {/* TABLE FOR DISPLAY Operational Escalation Matrix   */}
+          <h1 className="font-bold text-center">
+            Operational Escalation Matrix{" "}
+          </h1>
+          <table className="w-full text-sm text-left rtl:text-right text-gray-500 ">
+            <thead className="text-xs text-gray-700 uppercase bg-gray-50  ">
+              <tr>
+                <th scope="col" className="px-6 py-3">
+                  Escalation Level
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Name
+                </th>
+                <th scope="col" className="px-6 py-3"></th>
               </tr>
-            ))}
-        </tbody>
-      </table>
+            </thead>
+            <tbody>
+              {project?.project_operational_matrix?.length > 0 &&
+                project?.project_operational_matrix?.map((matrix) => (
+                  <tr
+                    className="bg-white border-b  hover:bg-gray-50 "
+                    key={matrix._id}
+                  >
+                    <th className="px-6 py-4  ">{matrix.level}</th>
+
+                    <td className="px-6 py-4">{matrix.name}</td>
+                    <td className="px-6 py-4 text-right flex gap-2">
+                      {/* EDITMATRIX COMPONENT FOR POP UP  */}
+                      {(myUser?.role === "Admin" || myUser?.role === "PM") && (
+                        <>
+                          <EditMatrix
+                            matrix={matrix}
+                            setFetch={setFetch}
+                            typeOfMatrix={"operational"}
+                          />
+                          <button
+                            className="text-red-600"
+                            onClick={() => handleDelete(matrix._id)}
+                          >
+                            Delete
+                          </button>
+                        </>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        </>
+      )}
     </>
   );
 }

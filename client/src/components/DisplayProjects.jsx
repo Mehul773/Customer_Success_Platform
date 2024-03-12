@@ -9,7 +9,7 @@ import { FaDownload } from "react-icons/fa";
 import { saveAs } from "file-saver";
 import Loader from "../components/Loader";
 
-function DisplayProjects({ fetch, setFetch }) {
+function DisplayProjects({ fetch, setFetch, myUser }) {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
@@ -65,64 +65,82 @@ function DisplayProjects({ fetch, setFetch }) {
   }
 
   return (
-    <div className=" overflow-x-auto shadow-md sm:rounded-lg">
-      <table className="w-full text-sm text-left rtl:text-right text-gray-500 ">
-        <thead className="text-xs text-gray-700 uppercase bg-gray-50  ">
-          <tr>
-            <th scope="col" className="px-6 py-3">
-              Project name
-            </th>
-            <th scope="col" className="px-6 py-3">
-              Project Description
-            </th>
-            <th scope="col" className="px-6 py-3">
-              Scope
-            </th>
-            <th scope="col" className="px-6 py-3">
-              Stack
-            </th>
-            <th scope="col" className="px-6 py-3">
-              <span className="sr-only">Edit</span>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {projects?.length > 0 &&
-            projects?.map((project) => (
-              <tr
-                className="bg-white border-b  hover:bg-gray-50 "
-                key={project._id}
-              >
-                <th
-                  scope="row"
-                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
-                >
-                  {project.project_name}
-                </th>
-                <td className="px-6 py-4">{project.project_desc}</td>
-                <td className="px-6 py-4">{project.project_scope}</td>
-                <td className="px-6 py-4">{project.project_stack}</td>
-                <td className="px-6 py-4 text-right flex gap-2 justify-center items-center">
-                  <button onClick={() => download(project._id)}>
-                    <FaDownload />
-                  </button>
-                  <Link to={`/project/${project._id}`}>
-                    <FaEye />
-                  </Link>
-                  {/* EDITPROJECT COMPONENT FOR POP UP  */}
-                  <EditProject project={project} setFetch={setFetch} />
-                  <button
-                    className="text-red-600"
-                    onClick={() => handleDelete(project._id)}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-        </tbody>
-      </table>
-    </div>
+    <>
+      {myUser && (
+        <>
+          {myUser && (
+            <>
+              <div className=" overflow-x-auto shadow-md sm:rounded-lg">
+                <table className="w-full text-sm text-left rtl:text-right text-gray-500 ">
+                  <thead className="text-xs text-gray-700 uppercase bg-gray-50  ">
+                    <tr>
+                      <th scope="col" className="px-6 py-3">
+                        Project name
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                        Project Description
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                        Scope
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                        Stack
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                        <span className="sr-only">Edit</span>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {projects?.length > 0 &&
+                      projects?.map((project) => (
+                        <tr
+                          className="bg-white border-b  hover:bg-gray-50 "
+                          key={project._id}
+                        >
+                          <th
+                            scope="row"
+                            className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
+                          >
+                            {project.project_name}
+                          </th>
+                          <td className="px-6 py-4">{project.project_desc}</td>
+                          <td className="px-6 py-4">{project.project_scope}</td>
+                          <td className="px-6 py-4">{project.project_stack}</td>
+                          <td className="px-6 py-4 text-right flex gap-2 justify-center items-center">
+                            <button onClick={() => download(project._id)}>
+                              <FaDownload />
+                            </button>
+                            <Link to={`/project/${project._id}`}>
+                              <FaEye />
+                            </Link>
+                            {/* EDITPROJECT COMPONENT FOR POP UP  */}
+                            {(myUser.role === "Admin" ||
+                              myUser.role === "Auditor") && (
+                              <>
+                                <EditProject
+                                  project={project}
+                                  setFetch={setFetch}
+                                />
+                                <button
+                                  className="text-red-600"
+                                  onClick={() => handleDelete(project._id)}
+                                >
+                                  Delete
+                                </button>
+                              </>
+                            )}
+                          </td>
+                        </tr>
+                      ))}
+                  </tbody>
+                </table>
+              </div>
+            </>
+          )}
+        </>
+      )}
+    </>
   );
 }
 

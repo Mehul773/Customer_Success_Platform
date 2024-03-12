@@ -34,36 +34,35 @@ function Dashboard() {
               </button>
             </li>
             <li className="me-2">
-              <button
-                className={`inline-block p-4 border-b-2 rounded-t-lg ${
-                  tab === "Create Project"
-                    ? "text-blue-600 border-blue-600  "
-                    : "border-transparent hover:text-gray-600 hover:border-gray-300 "
-                }`}
-                onClick={() => setTab("Create Project")}
-              >
-                Create Project
-              </button>
-            </li>
-            <li className="me-2">
-              <button
-                className={`inline-block p-4 border-b-2 rounded-t-lg ${
-                  tab === "Auditors"
-                    ? "text-blue-600 border-blue-600  "
-                    : "border-transparent hover:text-gray-600 hover:border-gray-300 "
-                }`}
-                onClick={() => setTab("Auditors")}
-              >
-                Auditors
-              </button>
+              {(myUser.role === "Admin" || myUser.role === "Auditor") && (
+                <>
+                  <button
+                    className={`inline-block p-4 border-b-2 rounded-t-lg ${
+                      tab === "Create Project"
+                        ? "text-blue-600 border-blue-600  "
+                        : "border-transparent hover:text-gray-600 hover:border-gray-300 "
+                    }`}
+                    onClick={() => setTab("Create Project")}
+                  >
+                    Create Project
+                  </button>
+                </>
+              )}
             </li>
           </ul>
           {tab === "Display projects" && (
-            <DisplayProjects fetch={fetch} setFetch={setFetch} />
+            <DisplayProjects
+              fetch={fetch}
+              setFetch={setFetch}
+              myUser={myUser}
+            />
           )}
-          {tab === "Create Project" && (
-            <CreateProject fetch={fetch} setFetch={setFetch} />
-          )}
+          {tab === "Create Project" &&
+            (myUser.role === "Admin" || myUser.role === "Auditor") && (
+              <>
+                <CreateProject fetch={fetch} setFetch={setFetch} />
+              </>
+            )}
         </div>
       )}
     </>

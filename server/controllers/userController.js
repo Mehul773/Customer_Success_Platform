@@ -96,7 +96,6 @@ const editUser = async (req, res, next) => {
       role,
       email,
     });
-    console.log(userDoc);
     await userDoc.save();
     return res.status(200).json({ message: "user edited successfully" });
   } catch (error) {

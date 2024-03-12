@@ -96,32 +96,58 @@ function Project() {
           {tab === "Project Details" && (
             <ProjectDetails project={project} setFetch={setFetch} />
           )}
-          {tab === "Budget" && <Budget project={project} setFetch={setFetch} />}
+          {tab === "Budget" && (
+            <Budget project={project} setFetch={setFetch} myUser={myUser} />
+          )}
           {tab === "Risk Profiling" && (
-            <Risk project={project} setFetch={setFetch} />
+            <Risk project={project} setFetch={setFetch} myUser={myUser} />
           )}
           {tab === "Phases/Milestones" && (
-            <Phase project={project} setFetch={setFetch} />
+            <Phase project={project} setFetch={setFetch} myUser={myUser} />
           )}
           {tab === "Sprint wise detail" && (
-            <Sprint project={project} setFetch={setFetch} />
+            <Sprint project={project} setFetch={setFetch} myUser={myUser} />
           )}
           {tab === "Stckholder" && (
-            <Stackholder project={project} setFetch={setFetch} />
+            <Stackholder
+              project={project}
+              setFetch={setFetch}
+              myUser={myUser}
+            />
           )}
           {tab === "Audit History" && (
-            <AuditHistory project={project} setFetch={setFetch} />
+            <AuditHistory
+              project={project}
+              setFetch={setFetch}
+              myUser={myUser}
+            />
           )}
           {tab === "Version History" && (
-            <VersionHistory project={project} setFetch={setFetch} />
+            <VersionHistory
+              project={project}
+              setFetch={setFetch}
+              myUser={myUser}
+            />
           )}
           {tab === "Escalation Matrix" && (
             <div>
-              <OperationalMatrix project={project} setFetch={setFetch} />
+              <OperationalMatrix
+                project={project}
+                setFetch={setFetch}
+                myUser={myUser}
+              />
               <hr />
-              <FinancialMatrix project={project} setFetch={setFetch} />
+              <FinancialMatrix
+                project={project}
+                setFetch={setFetch}
+                myUser={myUser}
+              />
               <hr />
-              <TechnicalMatrix project={project} setFetch={setFetch} />
+              <TechnicalMatrix
+                project={project}
+                setFetch={setFetch}
+                myUser={myUser}
+              />
             </div>
           )}
         </div>
