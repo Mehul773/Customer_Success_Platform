@@ -1,16 +1,10 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { FaDownload } from "react-icons/fa";
 import { saveAs } from "file-saver";
 
-import {
-  TabsContext,
-  TabList,
-  Tab,
-  TabPanels,
-  TabPanel,
-} from "monday-ui-react-core";
+import { UserContext } from "../../UserContext";
 import ProjectDetails from "../../components/ProjectDetails";
 import Budget from "../../components/Budget";
 import Risk from "../../components/Risk";
@@ -23,12 +17,17 @@ import FinancialMatrix from "../../components/FinancialMatrix";
 import TechnicalMatrix from "../../components/TechnicalMatrix";
 import Loader from "../../components/Loader";
 import VersionHistory from "../../components/VersionHistory";
+import MyTab from "../../components/MyTab";
+import { useAuth0 } from "@auth0/auth0-react";
 
 function Project() {
   const { id } = useParams();
   const [project, setProject] = useState({});
   const [fetch, setFetch] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [tab, setTab] = useState("Project Details");
+  const { myUser } = useContext(UserContext);
+  const { isLoading } = useAuth0();
 
   useEffect(() => {
     async function fetchOneProject() {
@@ -42,7 +41,7 @@ function Project() {
     fetchOneProject();
   }, [fetch]);
 
-  if (!project) {
+  if (!project || isLoading || !myUser) {
     return <Loader />;
   }
 
@@ -73,69 +72,61 @@ function Project() {
   }
 
   return (
-    <div className="w-full mt-2">
-      <TabsContext>
-        <TabList>
-          <Tab>Project Details</Tab>
-          <Tab>Budget</Tab>
-          <Tab>Risk Profiling </Tab>
-          <Tab>Phases/Milestones </Tab>
-          <Tab>Sprint wise detail </Tab>
-          <Tab>Stckholder </Tab>
-          <Tab>Audit History </Tab>
-          <Tab>Version History </Tab>
-          <Tab>Escalation Matrix </Tab>
-        </TabList>
-        <div className="flex gap-3 items-center cursor-pointer">
-          <h1 className="font-bold">Project Name: {project.project_name}</h1>
-          <div onClick={() => download(project._id)}>
-            <FaDownload />
+    <>
+      {myUser && (
+        <div className="text-sm font-medium text-center text-gray-500 border-b border-gray-200  ">
+          <ul className="flex flex-wrap -mb-px">
+            <MyTab title={"Project Details"} setTab={setTab} tab={tab} />
+            <MyTab title={"Budget"} setTab={setTab} tab={tab} />
+            <MyTab title={"Risk Profiling"} setTab={setTab} tab={tab} />
+            <MyTab title={"Phases/Milestones"} setTab={setTab} tab={tab} />
+            <MyTab title={"Sprint wise detail"} setTab={setTab} tab={tab} />
+            <MyTab title={"Stckholder"} setTab={setTab} tab={tab} />
+            <MyTab title={"Audit History"} setTab={setTab} tab={tab} />
+            <MyTab title={"Version History"} setTab={setTab} tab={tab} />
+            <MyTab title={"Escalation Matrix"} setTab={setTab} tab={tab} />
+          </ul>
+          <hr />
+          <div className="flex gap-3 items-center cursor-pointer">
+            <h1 className="font-bold">Project Name: {project.project_name}</h1>
+            <div onClick={() => download(project._id)}>
+              <FaDownload />
+            </div>
           </div>
-        </div>
-        <TabPanels>
-          <TabPanel>
-            {/* PROJECT DETAILS COMPONENT  */}
+          {tab === "Project Details" && (
             <ProjectDetails project={project} setFetch={setFetch} />
-          </TabPanel>
-          <TabPanel>
-            {/* BUDGET COMPONENT  */}
-            <Budget project={project} setFetch={setFetch} />
-          </TabPanel>
-          <TabPanel>
-            {/* RISK PROFILING COMPONENT  */}
+          )}
+          {tab === "Budget" && <Budget project={project} setFetch={setFetch} />}
+          {tab === "Risk Profiling" && (
             <Risk project={project} setFetch={setFetch} />
-          </TabPanel>
-          <TabPanel>
-            {/* PHASE PROFILING COMPONENT  */}
+          )}
+          {tab === "Phases/Milestones" && (
             <Phase project={project} setFetch={setFetch} />
-          </TabPanel>
-          <TabPanel>
-            {/* SPRINT COMPONENT  */}
+          )}
+          {tab === "Sprint wise detail" && (
             <Sprint project={project} setFetch={setFetch} />
-          </TabPanel>
-          <TabPanel>
-            {/* STCKHOLDER COMPONENT  */}
+          )}
+          {tab === "Stckholder" && (
             <Stackholder project={project} setFetch={setFetch} />
-          </TabPanel>
-          <TabPanel>
-            {/* AUDIT HISTORY COMPONENT  */}
+          )}
+          {tab === "Audit History" && (
             <AuditHistory project={project} setFetch={setFetch} />
-          </TabPanel>
-          <TabPanel>
-            {/* Version HISTORY COMPONENT  */}
+          )}
+          {tab === "Version History" && (
             <VersionHistory project={project} setFetch={setFetch} />
-          </TabPanel>
-          <TabPanel>
-            {/* Escalation Matrix   COMPONENT  */}
-            <OperationalMatrix project={project} setFetch={setFetch} />
-            <hr />
-            <FinancialMatrix project={project} setFetch={setFetch} />
-            <hr />
-            <TechnicalMatrix project={project} setFetch={setFetch} />
-          </TabPanel>
-        </TabPanels>
-      </TabsContext>
-    </div>
+          )}
+          {tab === "Escalation Matrix" && (
+            <div>
+              <OperationalMatrix project={project} setFetch={setFetch} />
+              <hr />
+              <FinancialMatrix project={project} setFetch={setFetch} />
+              <hr />
+              <TechnicalMatrix project={project} setFetch={setFetch} />
+            </div>
+          )}
+        </div>
+      )}
+    </>
   );
 }
 

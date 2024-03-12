@@ -54,7 +54,7 @@ const ProjectDetails = ({ project, setFetch }) => {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-8">
+    <div className="max-w-md mx-auto p">
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label className="block mb-1" htmlFor="project_name">

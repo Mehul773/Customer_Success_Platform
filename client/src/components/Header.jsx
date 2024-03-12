@@ -53,7 +53,7 @@ function Header() {
             type="img"
           />
           <div className="flex flex-col">
-            <div>{user?.name || user?.email}</div>
+            <div>{user?.name.split("@")[0] || user?.email.split("@")[0]}</div>
             <div>{myUser?.role || "User"}</div>
           </div>
         </div>

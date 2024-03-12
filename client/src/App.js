@@ -4,7 +4,6 @@ import axios from "axios";
 import { ToastContainer } from "react-toastify";
 
 import "./App.css";
-import AuditorDashboard from "./components/DashboardAuditor";
 import Layout from "./components/Layout";
 import * as myConstants from "./myConstants";
 import Project from "./pages/auditor/Project";

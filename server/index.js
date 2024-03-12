@@ -20,7 +20,11 @@ const matrixRoutes = require("./routes/matrixRoutes");
 /* CONTROLLER */
 const { sendMailToAll } = require("./controllers/emailController");
 const { downloadAllContent } = require("./controllers/downloadAsPdf");
-const { createAdmin, checkUser } = require("./controllers/userController");
+const {
+  createAdmin,
+  checkUser,
+  createAuditor,
+} = require("./controllers/userController");
 
 /* CONFIGURATIONS */
 dotenv.config();
@@ -58,6 +62,9 @@ app.use("/matrix", matrixRoutes);
 
 // CREATE ADMIN
 app.post("/admin", createAdmin);
+
+//CREATE AUDITOR
+app.post("/auditor", createAuditor);
 
 // SEND MAIL
 app.get("/send-mail/:project_id", sendMailToAll);

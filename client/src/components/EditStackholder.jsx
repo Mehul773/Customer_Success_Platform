@@ -66,7 +66,7 @@ function EditStackholder({ stackholder, setFetch }) {
         </svg>
       </div>
       {isModalOpen && (
-        <div className="fixed top-40 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50">
+        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50">
           <form
             onSubmit={updateStackholder}
             className="bg-bg_white text-bg_dark_font rounded-md shadow-lg shadow-bg_light_section border-2 border-bg_dark_section p-7 flex flex-col justify-center items-center gap-1"

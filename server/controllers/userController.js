@@ -16,6 +16,23 @@ const createAdmin = async (req, res, next) => {
   }
 };
 
+//CREATE ADMIN
+const createAuditor = async (req, res, next) => {
+  const { name, email } = req.body;
+  try {
+    const adminDoc = await User.create({
+      name,
+      role: "Auditor",
+      email,
+    });
+
+    return res.status(200).json({ message: "Auditor created" });
+  } catch (error) {
+    console.log(error);
+    return res.json({ message: `Error occurred ${error}` });
+  }
+};
+
 //CHECK USER AND SEND USER
 const checkUser = async (req, res, next) => {
   const { user } = req.body;
@@ -36,4 +53,4 @@ const checkUser = async (req, res, next) => {
   }
 };
 
-module.exports = { createAdmin, checkUser };
+module.exports = { createAdmin, checkUser, createAuditor };
