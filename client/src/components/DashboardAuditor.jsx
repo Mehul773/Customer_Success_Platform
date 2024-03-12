@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import CreateProject from "../../components/CreateProject";
-import DisplayProjects from "../../components/DisplayProjects";
+import { useAuth0 } from "@auth0/auth0-react";
+
+import CreateProject from "./CreateProject";
+import DisplayProjects from "./DisplayProjects";
 import {
   Tab,
   TabList,
@@ -8,9 +10,16 @@ import {
   TabsContext,
   TabPanel,
 } from "monday-ui-react-core";
+import Loader from "./Loader";
 
-function AuditorDashboard() {
+function DashboardAuditor() {
   const [fetch, setFetch] = useState(false);
+  const { isLoading } = useAuth0();
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
   return (
     <div className="w-full">
       AuditorDashboard
@@ -34,4 +43,4 @@ function AuditorDashboard() {
   );
 }
 
-export default AuditorDashboard;
+export default DashboardAuditor;

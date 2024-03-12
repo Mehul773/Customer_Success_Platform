@@ -20,6 +20,7 @@ const matrixRoutes = require("./routes/matrixRoutes");
 /* CONTROLLER */
 const { sendMailToAll } = require("./controllers/emailController");
 const { downloadAllContent } = require("./controllers/downloadAsPdf");
+const { createAdmin, checkUser } = require("./controllers/userController");
 
 /* CONFIGURATIONS */
 dotenv.config();
@@ -55,7 +56,13 @@ app.use("/auditHistory", auditHistoryRoutes);
 app.use("/versionHistory", versionHistoryRoutes);
 app.use("/matrix", matrixRoutes);
 
+// CREATE ADMIN
+app.post("/admin", createAdmin);
+
 // SEND MAIL
 app.get("/send-mail/:project_id", sendMailToAll);
 // DOWNLOAD ALL CONTENT
 app.get("/download-pdf/:project_id", downloadAllContent);
+
+//CHECK USER AND SEND USER INFO
+app.post("/check-user", checkUser);

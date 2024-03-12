@@ -7,13 +7,14 @@ function Sidebar() {
   return (
     <div className="w-56 bg-white rounded-md h-[90vh] mt-2 flex flex-col justify-start items-center gap-1">
       <Button
+        kind={Button.kinds.TERTIARY}
         className="w-4/5 mt-3"
         onClick={(e) => {
           e.preventDefault();
-          navtigate("/projects");
+          navtigate("/dashboard");
         }}
       >
-        <p className="text-left">+ Projects</p>
+        <p className="text-left">Dashboard</p>
       </Button>
 
       <Button
@@ -26,12 +27,6 @@ function Sidebar() {
       >
         Stackholders
       </Button>
-      {/* <Button kind={Button.kinds.TERTIARY} className="w-4/5 ">
-        Employees
-      </Button>
-      <Button kind={Button.kinds.TERTIARY} className="w-4/5 ">
-        Setting
-      </Button> */}
     </div>
   );
 }
