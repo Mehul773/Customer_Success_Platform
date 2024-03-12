@@ -5,7 +5,6 @@ import CreateProject from "../components/CreateProject";
 import DisplayProjects from "../components/DisplayProjects";
 import Loader from "../components/Loader";
 import { UserContext } from "../UserContext";
-import DisplayAuditor from "../components/DisplayAuditor";
 
 function Dashboard() {
   const [fetch, setFetch] = useState(false);
@@ -64,9 +63,6 @@ function Dashboard() {
           )}
           {tab === "Create Project" && (
             <CreateProject fetch={fetch} setFetch={setFetch} />
-          )}
-          {tab === "Auditors" && (
-            <DisplayAuditor fetch={fetch} setFetch={setFetch} />
           )}
         </div>
       )}

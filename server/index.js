@@ -23,7 +23,10 @@ const { downloadAllContent } = require("./controllers/downloadAsPdf");
 const {
   createAdmin,
   checkUser,
-  createAuditor,
+  displayUsers,
+  createUser,
+  deleteUser,
+  editUser,
 } = require("./controllers/userController");
 
 /* CONFIGURATIONS */
@@ -63,8 +66,8 @@ app.use("/matrix", matrixRoutes);
 // CREATE ADMIN
 app.post("/admin", createAdmin);
 
-//CREATE AUDITOR
-app.post("/auditor", createAuditor);
+//CREATE USER
+app.post("/user", createUser);
 
 // SEND MAIL
 app.get("/send-mail/:project_id", sendMailToAll);
@@ -73,3 +76,10 @@ app.get("/download-pdf/:project_id", downloadAllContent);
 
 //CHECK USER AND SEND USER INFO
 app.post("/check-user", checkUser);
+
+//GET ALL USERS EXCEPT ADMIN
+app.get("/users", displayUsers);
+//DELETE ONE USER
+app.delete("/user/:user_id", deleteUser);
+//EDIT ONE USER
+app.put("/user/:user_id", editUser);

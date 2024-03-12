@@ -25,7 +25,7 @@ function Sidebar() {
           navtigate("/stackholders");
         }}
       >
-        Stackholders
+        + Stackholders
       </Button>
     </div>
   );
