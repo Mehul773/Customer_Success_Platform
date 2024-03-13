@@ -1,15 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+// ======================================================================
+// THIS COMPONENT IS NOT IN USE NOW
+// ======================================================================
+
 function EditStackholder({ stackholder, setFetch }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [users, setUsers] = useState([]);
+
+  const [selectedUser, setSelectedUser] = useState(null);
   const [formData, setFormData] = useState({
     role: stackholder.role,
     name: stackholder.name,
-    contact: stackholder.contact,
+    email: stackholder.contact,
   });
+
+  useEffect(() => {
+    async function fetchUsers() {
+      formData.name = selectedUser?.name;
+      try {
+        const response = await axios.post(`/user-by-role`, formData);
+        setUsers(response.data);
+      } catch (error) {
+        console.error("Error fetching project:", error);
+      }
+    }
+    fetchUsers();
+  }, [formData.role]);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -26,15 +46,13 @@ function EditStackholder({ stackholder, setFetch }) {
   async function updateStackholder(e) {
     e.preventDefault();
     try {
-      await axios
-        .put(`/stackholder/edit-stackholder/${stackholder._id}`, formData)
-        .then((res) => {
-          if (res.status === 200) {
-            toast.success("Stckholder Edited successfully ");
-            setFetch((prev) => !prev);
-            closeModal();
-          }
-        });
+      await axios.put(`/user/${stackholder._id}`, formData).then((res) => {
+        if (res.status === 200) {
+          toast.success("Stckholder Edited successfully ");
+          setFetch((prev) => !prev);
+          closeModal();
+        }
+      });
     } catch (err) {
       if (err.response.status === 409) {
         toast.error(err.response.data.message);
@@ -87,7 +105,36 @@ function EditStackholder({ stackholder, setFetch }) {
                 <option value="">Select</option>
                 <option value="PM">PM</option>
                 <option value="Client">Client</option>
-                <option value="Account Manager">Account Manager</option>
+              </select>
+            </div>
+            <div className="mb-1 w-full">
+              <label className=" mb-1" htmlFor="contact">
+                Email
+              </label>
+              <select
+                required
+                type="email"
+                id="contact"
+                name="contact"
+                value={formData.contact}
+                onChange={(e) => {
+                  handleChange(e);
+                  setSelectedUser(
+                    users.find((user) => user.email === e.target.value)
+                  );
+                }}
+                className="w-full border rounded-md py-2 px-3"
+              >
+                <option value="">Select</option>
+                {users.map((user) => (
+                  <option
+                    value={user.email}
+                    key={user._id}
+                    onClick={() => setSelectedUser(user)}
+                  >
+                    {user.email}
+                  </option>
+                ))}
               </select>
             </div>
             <div className="mb-1 w-full">
@@ -100,21 +147,7 @@ function EditStackholder({ stackholder, setFetch }) {
                 min={0}
                 id="name"
                 name="name"
-                value={formData.name}
-                onChange={handleChange}
-                className="w-full border rounded-md py-2 px-3"
-              />
-            </div>
-            <div className="mb-1 w-full">
-              <label className=" mb-1" htmlFor="contact">
-                Email
-              </label>
-              <input
-                required
-                type="email"
-                id="contact"
-                name="contact"
-                value={formData.contact}
+                value={selectedUser?.name}
                 onChange={handleChange}
                 className="w-full border rounded-md py-2 px-3"
               />

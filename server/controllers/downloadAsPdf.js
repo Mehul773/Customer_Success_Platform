@@ -16,7 +16,8 @@ const downloadAllContent = async (req, res) => {
       .populate("project_operational_matrix")
       .populate("project_financial_matrix")
       .populate("project_technical_matrix")
-      .populate("project_version_history");
+      .populate("project_version_history")
+      .populate("project_users");
 
     if (!projectDoc) {
       return res.status(409).json({ message: "Project does not exists" });

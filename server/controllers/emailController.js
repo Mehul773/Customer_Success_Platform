@@ -15,7 +15,8 @@ const sendMailToAll = async (req, res) => {
     .populate("project_operational_matrix")
     .populate("project_financial_matrix")
     .populate("project_technical_matrix")
-    .populate("project_version_history");
+    .populate("project_version_history")
+    .populate("project_users");
 
   if (!projectDoc) {
     return res.status(409).json({ message: "Project does not exists" });
@@ -34,11 +35,11 @@ const sendMailToAll = async (req, res) => {
   });
 
   let clients = [];
-  projectDoc[0]?.project_stackholder.map((user) => {
+  projectDoc[0]?.project_users.map((user) => {
     if (user.role == "Client") {
       clients.push({
         name: user.name,
-        email: user.contact,
+        email: user.email,
       });
     }
   });
@@ -59,14 +60,15 @@ const sendMailToAll = async (req, res) => {
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
         console.error("Error sending email:", error);
+        res.json({ message: "Can not send email" });
       } else {
         console.log("Email sent:", info.response);
+        res
+          .status(200)
+          .json({ message: "Audit history changed. Email sent successfully" });
       }
     });
   });
-  res
-    .status(200)
-    .json({ message: "Audit history changed. Email sent successfully" });
 };
 
 module.exports = { sendMailToAll };

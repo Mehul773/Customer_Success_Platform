@@ -13,7 +13,9 @@ const {
 } = require("../controllers/projectController");
 
 /* APIs */
-router.get("/display-projects", displayProjects);
+
+//DISPLAY PROJECT
+router.get("/:user_id", displayProjects);
 router.get("/fetch-project/:id", fetchOneProject);
 
 router.post("/create-project", createProject);

@@ -1,5 +1,5 @@
 const Project = require("../models/projectModel");
-const Budget = require("../models/budgetModel");
+const User = require("../models/userModel");
 
 // CREATE PROJECT
 const createProject = async (req, res, next) => {
@@ -28,10 +28,27 @@ const createProject = async (req, res, next) => {
 
 //DISPLAY ALL PROJECTS
 const displayProjects = async (req, res, next) => {
+  const { user_id } = req.params;
+
+  const userDoc = await User.findOne({ _id: user_id });
+  if (!userDoc) {
+    return res.status(409).json({ message: "user does not exist" });
+  }
+
   try {
-    const projects = await Project.find({});
+    let projects;
+    if (userDoc.role === "Client" || userDoc.role === "PM") {
+      projects = await Project.find({
+        project_users: { $elemMatch: { $eq: user_id } },
+      });
+    } else {
+      projects = await Project.find({});
+    }
+
     if (projects) {
       return res.status(200).json(projects);
+    } else {
+      return res.json({ message: "projects not found" });
     }
   } catch (error) {
     console.log(error);
@@ -99,7 +116,8 @@ const fetchOneProject = async (req, res, next) => {
       .populate("project_operational_matrix")
       .populate("project_financial_matrix")
       .populate("project_technical_matrix")
-      .populate("project_version_history");
+      .populate("project_version_history")
+      .populate("project_users");
     if (!projectDoc) {
       return res.status(409).json({ message: "Project does not exists" });
     }

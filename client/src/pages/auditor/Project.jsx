@@ -81,7 +81,9 @@ function Project() {
             <MyTab title={"Risk Profiling"} setTab={setTab} tab={tab} />
             <MyTab title={"Phases/Milestones"} setTab={setTab} tab={tab} />
             <MyTab title={"Sprint wise detail"} setTab={setTab} tab={tab} />
-            <MyTab title={"Stckholder"} setTab={setTab} tab={tab} />
+            {(myUser.role === "Admin" || myUser.role === "Auditor") && (
+              <MyTab title={"Stckholder"} setTab={setTab} tab={tab} />
+            )}
             <MyTab title={"Audit History"} setTab={setTab} tab={tab} />
             <MyTab title={"Version History"} setTab={setTab} tab={tab} />
             <MyTab title={"Escalation Matrix"} setTab={setTab} tab={tab} />
@@ -108,13 +110,15 @@ function Project() {
           {tab === "Sprint wise detail" && (
             <Sprint project={project} setFetch={setFetch} myUser={myUser} />
           )}
-          {tab === "Stckholder" && (
-            <Stackholder
-              project={project}
-              setFetch={setFetch}
-              myUser={myUser}
-            />
-          )}
+          {tab === "Stckholder" &&
+            (myUser.role === "Admin" || myUser.role === "Auditor") && (
+              <Stackholder
+                project={project}
+                setFetch={setFetch}
+                myUser={myUser}
+                fetch={fetch}
+              />
+            )}
           {tab === "Audit History" && (
             <AuditHistory
               project={project}

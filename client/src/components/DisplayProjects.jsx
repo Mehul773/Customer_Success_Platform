@@ -15,7 +15,7 @@ function DisplayProjects({ fetch, setFetch, myUser }) {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.get("/project/display-projects");
+        const response = await axios.get(`/project/${myUser?._id}`);
         setProjects(response.data);
       } catch (error) {
         console.error("Error fetching projects:", error);

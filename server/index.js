@@ -27,6 +27,9 @@ const {
   createUser,
   deleteUser,
   editUser,
+  getUserByrole,
+  assignProject,
+  unassignProject,
 } = require("./controllers/userController");
 
 /* CONFIGURATIONS */
@@ -66,9 +69,6 @@ app.use("/matrix", matrixRoutes);
 // CREATE ADMIN
 app.post("/admin", createAdmin);
 
-//CREATE USER
-app.post("/user", createUser);
-
 // SEND MAIL
 app.get("/send-mail/:project_id", sendMailToAll);
 // DOWNLOAD ALL CONTENT
@@ -77,9 +77,24 @@ app.get("/download-pdf/:project_id", downloadAllContent);
 //CHECK USER AND SEND USER INFO
 app.post("/check-user", checkUser);
 
+//==========================USER ROUTES===================================
+//CREATE USER
+app.post("/user", createUser);
+
 //GET ALL USERS EXCEPT ADMIN
 app.get("/users", displayUsers);
+
 //DELETE ONE USER
 app.delete("/user/:user_id", deleteUser);
+
 //EDIT ONE USER
 app.put("/user/:user_id", editUser);
+
+//GET USER BY ROLE
+app.post("/user-by-role", getUserByrole);
+
+//ASSIGN PROJECT TO USER
+app.put("/user/assign-project/:project_id/:user_id", assignProject);
+
+//KICK OUT USER FROM PROJECT
+app.delete("/user/:project_id/:user_id", unassignProject);

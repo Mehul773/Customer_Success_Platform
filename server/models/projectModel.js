@@ -84,6 +84,12 @@ const ProjectSchema = new mongoose.Schema(
         ref: "VersionHistory",
       },
     ],
+    project_users: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
   },
   { timestamps: true, versionKey: false }
 );
