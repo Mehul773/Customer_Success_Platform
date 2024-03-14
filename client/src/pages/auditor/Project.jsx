@@ -19,6 +19,8 @@ import Loader from "../../components/Loader";
 import VersionHistory from "../../components/VersionHistory";
 import MyTab from "../../components/MyTab";
 import { useAuth0 } from "@auth0/auth0-react";
+import Resource from "../../components/Resource";
+import ClientFeedback from "../../components/ClientFeedback";
 
 function Project() {
   const { id } = useParams();
@@ -87,6 +89,8 @@ function Project() {
             <MyTab title={"Audit History"} setTab={setTab} tab={tab} />
             <MyTab title={"Version History"} setTab={setTab} tab={tab} />
             <MyTab title={"Escalation Matrix"} setTab={setTab} tab={tab} />
+            <MyTab title={"Resources"} setTab={setTab} tab={tab} />
+            <MyTab title={"Client Feedback"} setTab={setTab} tab={tab} />
           </ul>
           <hr />
           <div className="flex gap-3 items-center cursor-pointer">
@@ -157,6 +161,16 @@ function Project() {
                 myUser={myUser}
               />
             </div>
+          )}
+          {tab === "Resources" && (
+            <Resource project={project} setFetch={setFetch} myUser={myUser} />
+          )}
+          {tab === "Client Feedback" && (
+            <ClientFeedback
+              project={project}
+              setFetch={setFetch}
+              myUser={myUser}
+            />
           )}
         </div>
       )}

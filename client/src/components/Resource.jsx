@@ -3,15 +3,15 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Button } from "monday-ui-react-core";
-import EditSprint from "./EditSprint";
 import Loader from "./Loader";
+import EditResource from "./EditResource";
 
-function Sprint({ project, setFetch, myUser }) {
+function Resource({ project, setFetch, myUser }) {
   const [formData, setFormData] = useState({
-    sprint: "",
+    resourceName: "",
+    role: "",
     startDate: "",
     endDate: "",
-    status: "",
     comments: "",
   });
 
@@ -42,22 +42,20 @@ function Sprint({ project, setFetch, myUser }) {
       return;
     }
     try {
-      await axios
-        .post(`/sprint/create-sprint/${project._id}`, formData)
-        .then((res) => {
-          if (res.status === 200) {
-            toast.success("Sprint Created successfully ");
-            setFetch((prev) => !prev);
-            setFormData({
-              sprint: "",
-              startDate: "",
-              endDate: "",
-              status: "",
-              comments: "",
-            });
-            closeModal();
-          }
-        });
+      await axios.post(`/resource/${project._id}`, formData).then((res) => {
+        if (res.status === 200) {
+          toast.success("Resource Created successfully ");
+          setFetch((prev) => !prev);
+          setFormData({
+            resourceName: "",
+            role: "",
+            startDate: "",
+            endDate: "",
+            comments: "",
+          });
+          closeModal();
+        }
+      });
     } catch (err) {
       if (err.response.status === 409) {
         toast.error(err.response.data.message);
@@ -66,13 +64,13 @@ function Sprint({ project, setFetch, myUser }) {
     }
   };
 
-  async function handleDelete(sprint_id) {
+  async function handleDelete(resource_id) {
     // eslint-disable-next-line no-restricted-globals
     var a = confirm("Do you want to delete? ");
     if (a) {
       try {
         const response = await axios.delete(
-          `/sprint/delete-sprint/${project._id}/${sprint_id}`
+          `/resource/${project._id}/${resource_id}`
         );
         toast.success(response.data.message);
         setFetch((prev) => !prev);
@@ -95,7 +93,7 @@ function Sprint({ project, setFetch, myUser }) {
           {/* POP UP FOR ADD RISK  */}
           {(myUser?.role === "Admin" || myUser?.role === "PM") && (
             <Button onClick={openModal} className="m-2">
-              + Add Sprint
+              + Add Resource
             </Button>
           )}
 
@@ -106,16 +104,31 @@ function Sprint({ project, setFetch, myUser }) {
                 className="bg-bg_white text-bg_dark_font rounded-md shadow-lg shadow-bg_light_section border-2 border-bg_dark_section p-7 flex flex-col justify-center items-center gap-1"
               >
                 <div className="mb-1 w-full">
-                  <label className=" mb-1" htmlFor="sprint">
-                    Sprint
+                  <label className=" mb-1" htmlFor="resourceName">
+                    Resource
                   </label>
                   <input
                     required
-                    type="number"
+                    type="text"
                     min={0}
-                    id="sprint"
-                    name="sprint"
-                    value={formData.sprint}
+                    id="resourceName"
+                    name="resourceName"
+                    value={formData.resourceName}
+                    onChange={handleChange}
+                    className="w-full border rounded-md py-2 px-3"
+                  />
+                </div>
+                <div className="mb-1 w-full">
+                  <label className=" mb-1" htmlFor="role">
+                    Role
+                  </label>
+                  <input
+                    required
+                    type="text"
+                    min={0}
+                    id="role"
+                    name="role"
+                    value={formData.role}
                     onChange={handleChange}
                     className="w-full border rounded-md py-2 px-3"
                   />
@@ -147,25 +160,6 @@ function Sprint({ project, setFetch, myUser }) {
                     onChange={handleChange}
                     className="w-full border rounded-md py-2 px-3"
                   />
-                </div>
-                <div className="mb-1 w-full">
-                  <label className="mb-2 " htmlFor="status">
-                    Status
-                  </label>
-                  <select
-                    required
-                    id="status"
-                    name="status"
-                    value={formData.status}
-                    onChange={handleChange}
-                    className="w-full border rounded-md py-2 px-3"
-                  >
-                    <option value="">Select</option>
-                    <option value="Delayed">Delayed</option>
-                    <option value="On-time">On-time</option>
-                    <option value="Sign-off Pending">Sign-off Pending</option>
-                    <option value="Sign-off">Sign-off</option>
-                  </select>
                 </div>
                 <div className="mb-1 w-full">
                   <label className=" mb-1" htmlFor="comments">
@@ -204,7 +198,10 @@ function Sprint({ project, setFetch, myUser }) {
             <thead className="text-xs text-gray-700 uppercase bg-gray-50  ">
               <tr>
                 <th scope="col" className="px-6 py-3">
-                  Sprint
+                  Resource
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Role
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Start Date
@@ -213,37 +210,37 @@ function Sprint({ project, setFetch, myUser }) {
                   End Date
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Status
-                </th>
-                <th scope="col" className="px-6 py-3">
                   Comments
                 </th>
               </tr>
             </thead>
             <tbody>
-              {project?.project_sprints?.length > 0 &&
-                project?.project_sprints?.map((mySprint) => (
+              {project?.project_resources?.length > 0 &&
+                project?.project_resources?.map((myResource) => (
                   <tr
                     className="bg-white border-b  hover:bg-gray-50 "
-                    key={mySprint._id}
+                    key={myResource._id}
                   >
-                    <th className="px-6 py-4  ">{mySprint.sprint}</th>
+                    <th className="px-6 py-4  ">{myResource.resourceName}</th>
+                    <th className="px-6 py-4  ">{myResource.role}</th>
                     <th className="px-6 py-4  ">
-                      {formatDate(mySprint.startDate)}
+                      {formatDate(myResource.startDate)}
                     </th>
                     <th className="px-6 py-4  ">
-                      {formatDate(mySprint.endDate)}
+                      {formatDate(myResource.endDate)}
                     </th>
-                    <th className="px-6 py-4  ">{mySprint.status}</th>
-                    <th className="px-6 py-4  ">{mySprint.comments}</th>
+                    <th className="px-6 py-4  ">{myResource.comments}</th>
 
                     {(myUser?.role === "Admin" || myUser?.role === "PM") && (
                       <td className="px-6 py-4 text-right flex gap-2">
-                        {/* EDITSPRINT COMPONENT FOR POP UP  */}
-                        <EditSprint sprint={mySprint} setFetch={setFetch} />
+                        {/* EDITRESOURCE COMPONENT FOR POP UP  */}
+                        <EditResource
+                          resource={myResource}
+                          setFetch={setFetch}
+                        />
                         <button
                           className="text-red-600"
-                          onClick={() => handleDelete(mySprint._id)}
+                          onClick={() => handleDelete(myResource._id)}
                         >
                           Delete
                         </button>
@@ -259,4 +256,4 @@ function Sprint({ project, setFetch, myUser }) {
   );
 }
 
-export default Sprint;
+export default Resource;

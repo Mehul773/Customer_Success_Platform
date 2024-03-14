@@ -16,6 +16,8 @@ const stackholderRoutes = require("./routes/stackholderRoutes");
 const auditHistoryRoutes = require("./routes/auditHistoryRoutes");
 const versionHistoryRoutes = require("./routes/versionHistoryRoutes");
 const matrixRoutes = require("./routes/matrixRoutes");
+const resourceRoutes = require("./routes/resourceRoutes");
+const clientFeedbackRoutes = require("./routes/clientFeedbackRoutes");
 
 /* CONTROLLER */
 const { sendMailToAll } = require("./controllers/emailController");
@@ -65,6 +67,8 @@ app.use("/stackholder", stackholderRoutes);
 app.use("/auditHistory", auditHistoryRoutes);
 app.use("/versionHistory", versionHistoryRoutes);
 app.use("/matrix", matrixRoutes);
+app.use("/resource", resourceRoutes);
+app.use("/clientFeedback", clientFeedbackRoutes);
 
 // CREATE ADMIN
 app.post("/admin", createAdmin);

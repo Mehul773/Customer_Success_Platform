@@ -91,6 +91,18 @@ const ProjectSchema = new mongoose.Schema(
         ref: "User",
       },
     ],
+    project_resources: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Resource",
+      },
+    ],
+    project_clientFeedback: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "ClientFeedback",
+      },
+    ],
   },
   { timestamps: true, versionKey: false }
 );

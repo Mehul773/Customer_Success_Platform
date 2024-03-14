@@ -3,18 +3,17 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Button } from "monday-ui-react-core";
-import EditSprint from "./EditSprint";
 import Loader from "./Loader";
+import EditClientFeedback from "./EditClientFeedback";
 
-function Sprint({ project, setFetch, myUser }) {
+function ClientFeedback({ project, setFetch, myUser }) {
   const [formData, setFormData] = useState({
-    sprint: "",
-    startDate: "",
-    endDate: "",
-    status: "",
-    comments: "",
+    type: "",
+    dateReceived: new Date().toJSON(),
+    feedback: "",
+    actionTaken: "",
+    closureDate: "",
   });
-
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {
@@ -37,23 +36,19 @@ function Sprint({ project, setFetch, myUser }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (formData.startDate > formData.endDate) {
-      toast.error("Start date should be less or qual completional date");
-      return;
-    }
+    console.log(formData);
     try {
       await axios
-        .post(`/sprint/create-sprint/${project._id}`, formData)
+        .post(`/clientFeedback/${project._id}`, formData)
         .then((res) => {
           if (res.status === 200) {
-            toast.success("Sprint Created successfully ");
+            toast.success(res.data.message);
             setFetch((prev) => !prev);
             setFormData({
-              sprint: "",
-              startDate: "",
-              endDate: "",
-              status: "",
-              comments: "",
+              type: "",
+              feedback: "",
+              actionTaken: "",
+              closureDate: "",
             });
             closeModal();
           }
@@ -66,13 +61,13 @@ function Sprint({ project, setFetch, myUser }) {
     }
   };
 
-  async function handleDelete(sprint_id) {
+  async function handleDelete(clientFeedback_id) {
     // eslint-disable-next-line no-restricted-globals
     var a = confirm("Do you want to delete? ");
     if (a) {
       try {
         const response = await axios.delete(
-          `/sprint/delete-sprint/${project._id}/${sprint_id}`
+          `/clientFeedback/${project._id}/${clientFeedback_id}`
         );
         toast.success(response.data.message);
         setFetch((prev) => !prev);
@@ -93,9 +88,9 @@ function Sprint({ project, setFetch, myUser }) {
       {myUser && (
         <>
           {/* POP UP FOR ADD RISK  */}
-          {(myUser?.role === "Admin" || myUser?.role === "PM") && (
+          {(myUser?.role === "Client" || myUser.role === "Admin") && (
             <Button onClick={openModal} className="m-2">
-              + Add Sprint
+              + Add Feedback
             </Button>
           )}
 
@@ -106,82 +101,67 @@ function Sprint({ project, setFetch, myUser }) {
                 className="bg-bg_white text-bg_dark_font rounded-md shadow-lg shadow-bg_light_section border-2 border-bg_dark_section p-7 flex flex-col justify-center items-center gap-1"
               >
                 <div className="mb-1 w-full">
-                  <label className=" mb-1" htmlFor="sprint">
-                    Sprint
-                  </label>
-                  <input
-                    required
-                    type="number"
-                    min={0}
-                    id="sprint"
-                    name="sprint"
-                    value={formData.sprint}
-                    onChange={handleChange}
-                    className="w-full border rounded-md py-2 px-3"
-                  />
-                </div>
-                <div className="mb-1 w-full">
-                  <label className=" mb-1" htmlFor="startDate">
-                    Start Date
-                  </label>
-                  <input
-                    required
-                    type="date"
-                    id="startDate"
-                    name="startDate"
-                    value={formData.startDate}
-                    onChange={handleChange}
-                    className="w-full border rounded-md py-2 px-3"
-                  />
-                </div>
-                <div className="mb-1 w-full">
-                  <label className=" mb-1" htmlFor="endDate">
-                    End Date
-                  </label>
-                  <input
-                    required
-                    type="date"
-                    id="endDate"
-                    name="endDate"
-                    value={formData.endDate}
-                    onChange={handleChange}
-                    className="w-full border rounded-md py-2 px-3"
-                  />
-                </div>
-                <div className="mb-1 w-full">
-                  <label className="mb-2 " htmlFor="status">
-                    Status
+                  <label className=" mb-1" htmlFor="type">
+                    Feedback type
                   </label>
                   <select
                     required
-                    id="status"
-                    name="status"
-                    value={formData.status}
+                    type="text"
+                    min={0}
+                    id="type"
+                    name="type"
+                    value={formData.type}
                     onChange={handleChange}
                     className="w-full border rounded-md py-2 px-3"
                   >
                     <option value="">Select</option>
-                    <option value="Delayed">Delayed</option>
-                    <option value="On-time">On-time</option>
-                    <option value="Sign-off Pending">Sign-off Pending</option>
-                    <option value="Sign-off">Sign-off</option>
+                    <option value="Complaint">Complaint</option>
+                    <option value="Appreciation">Appreciation</option>
                   </select>
                 </div>
+
                 <div className="mb-1 w-full">
-                  <label className=" mb-1" htmlFor="comments">
-                    Comments
+                  <label className=" mb-1" htmlFor="feedback">
+                    Detailed Feedback
                   </label>
                   <input
                     required
                     type="text"
-                    id="comments"
-                    name="comments"
-                    value={formData.comments}
+                    id="feedback"
+                    name="feedback"
+                    value={formData.feedback}
                     onChange={handleChange}
                     className="w-full border rounded-md py-2 px-3"
                   />
                 </div>
-
+                <div className="mb-1 w-full">
+                  <label className=" mb-1" htmlFor="actionTaken">
+                    Action Taken
+                  </label>
+                  <input
+                    required
+                    type="text"
+                    id="actionTaken"
+                    name="actionTaken"
+                    value={formData.actionTaken}
+                    onChange={handleChange}
+                    className="w-full border rounded-md py-2 px-3"
+                  />
+                </div>
+                <div className="mb-1 w-full">
+                  <label className=" mb-1" htmlFor="closureDate">
+                    Closure Date
+                  </label>
+                  <input
+                    required
+                    type="date"
+                    id="closureDate"
+                    name="closureDate"
+                    value={formData.closureDate}
+                    onChange={handleChange}
+                    className="w-full border rounded-md py-2 px-3"
+                  />
+                </div>
                 <div>
                   <button
                     onClick={closeModal}
@@ -204,46 +184,60 @@ function Sprint({ project, setFetch, myUser }) {
             <thead className="text-xs text-gray-700 uppercase bg-gray-50  ">
               <tr>
                 <th scope="col" className="px-6 py-3">
-                  Sprint
+                  Feedback Type
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Start Date
+                  Date Received
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  End Date
+                  Detailed Feedback
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Status
+                  Action Taken
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Comments
+                  Closure Date
                 </th>
               </tr>
             </thead>
             <tbody>
-              {project?.project_sprints?.length > 0 &&
-                project?.project_sprints?.map((mySprint) => (
+              {project?.project_clientFeedback?.length > 0 &&
+                project?.project_clientFeedback?.map((myClientFeedback) => (
                   <tr
                     className="bg-white border-b  hover:bg-gray-50 "
-                    key={mySprint._id}
+                    key={myClientFeedback._id}
                   >
-                    <th className="px-6 py-4  ">{mySprint.sprint}</th>
+                    {myClientFeedback.type === "Complaint" && (
+                      <th className="px-6 py-4 text-red-500">
+                        {myClientFeedback.type}
+                      </th>
+                    )}
+                    {myClientFeedback.type === "Appreciation" && (
+                      <th className="px-6 py-4 text-green-500">
+                        {myClientFeedback.type}
+                      </th>
+                    )}
                     <th className="px-6 py-4  ">
-                      {formatDate(mySprint.startDate)}
+                      {formatDate(myClientFeedback.dateReceived)}
+                    </th>
+                    <th className="px-6 py-4  ">{myClientFeedback.feedback}</th>
+                    <th className="px-6 py-4  ">
+                      {myClientFeedback.actionTaken}
                     </th>
                     <th className="px-6 py-4  ">
-                      {formatDate(mySprint.endDate)}
+                      {formatDate(myClientFeedback.closureDate)}
                     </th>
-                    <th className="px-6 py-4  ">{mySprint.status}</th>
-                    <th className="px-6 py-4  ">{mySprint.comments}</th>
-
-                    {(myUser?.role === "Admin" || myUser?.role === "PM") && (
+                    {(myUser?.role === "Admin" ||
+                      myUser?.role === "Client") && (
                       <td className="px-6 py-4 text-right flex gap-2">
-                        {/* EDITSPRINT COMPONENT FOR POP UP  */}
-                        <EditSprint sprint={mySprint} setFetch={setFetch} />
+                        {/* EDITRESOURCE COMPONENT FOR POP UP  */}
+                        <EditClientFeedback
+                          clientFeedback={myClientFeedback}
+                          setFetch={setFetch}
+                        />
                         <button
                           className="text-red-600"
-                          onClick={() => handleDelete(mySprint._id)}
+                          onClick={() => handleDelete(myClientFeedback._id)}
                         >
                           Delete
                         </button>
@@ -259,4 +253,4 @@ function Sprint({ project, setFetch, myUser }) {
   );
 }
 
-export default Sprint;
+export default ClientFeedback;
