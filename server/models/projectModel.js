@@ -103,6 +103,12 @@ const ProjectSchema = new mongoose.Schema(
         ref: "ClientFeedback",
       },
     ],
+    project_projectUpdates: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "ProjectUpdate",
+      },
+    ],
   },
   { timestamps: true, versionKey: false }
 );

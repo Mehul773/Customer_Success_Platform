@@ -18,6 +18,7 @@ const versionHistoryRoutes = require("./routes/versionHistoryRoutes");
 const matrixRoutes = require("./routes/matrixRoutes");
 const resourceRoutes = require("./routes/resourceRoutes");
 const clientFeedbackRoutes = require("./routes/clientFeedbackRoutes");
+const projectUpdateRoutes = require("./routes/projectUpdateRoutes");
 
 /* CONTROLLER */
 const { sendMailToAll } = require("./controllers/emailController");
@@ -69,6 +70,7 @@ app.use("/versionHistory", versionHistoryRoutes);
 app.use("/matrix", matrixRoutes);
 app.use("/resource", resourceRoutes);
 app.use("/clientFeedback", clientFeedbackRoutes);
+app.use("/projectUpdate", projectUpdateRoutes);
 
 // CREATE ADMIN
 app.post("/admin", createAdmin);
