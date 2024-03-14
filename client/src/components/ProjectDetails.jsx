@@ -2,8 +2,10 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Loader from "./Loader";
 
-const ProjectDetails = ({ project, setFetch }) => {
+const ProjectDetails = ({ project, setFetch, myUser }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     project_id: "",
     project_name: "",
@@ -15,6 +17,7 @@ const ProjectDetails = ({ project, setFetch }) => {
   });
 
   useEffect(() => {
+    setIsLoading(true);
     if (project) {
       setFormData((prevState) => ({
         ...prevState,
@@ -27,6 +30,7 @@ const ProjectDetails = ({ project, setFetch }) => {
         project_manager: project.project_manager,
       }));
     }
+    setIsLoading(false);
   }, [project]);
 
   const handleChange = (e) => {
@@ -37,21 +41,28 @@ const ProjectDetails = ({ project, setFetch }) => {
   };
 
   const handleSubmit = async (e) => {
+    setIsLoading(true);
     e.preventDefault();
     try {
       await axios.put("/project/edit-project", formData).then((res) => {
         if (res.status == 200) {
           toast.success("Project Edited successfully ");
           setFetch((prev) => !prev);
+          setIsLoading(false);
         }
       });
     } catch (err) {
       if (err.response.status === 409) {
         toast.error(err.response.data.message);
+        setIsLoading(false);
       }
       console.log(err);
     }
   };
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <div className="max-w-md mx-auto p">
@@ -133,26 +144,14 @@ const ProjectDetails = ({ project, setFetch }) => {
             <option value="On hold">On hold</option>
           </select>
         </div>
-        <div className="mb-4">
-          <label className="block mb-1" htmlFor="project_manager">
-            Project Manager
-          </label>
-          <input
-            required
-            type="text"
-            id="project_manager"
-            name="project_manager"
-            value={formData.project_manager}
-            onChange={handleChange}
-            className="w-full border rounded-md py-2 px-3"
-          />
-        </div>
-        <button
-          type="submit"
-          className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
-        >
-          Save
-        </button>
+        {(myUser?.role === "Admin" || myUser?.role === "Auditor") && (
+          <button
+            type="submit"
+            className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
+          >
+            Save
+          </button>
+        )}
       </form>
       ;
     </div>

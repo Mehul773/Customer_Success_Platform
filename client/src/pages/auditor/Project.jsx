@@ -96,7 +96,11 @@ function Project() {
             </div>
           </div>
           {tab === "Project Details" && (
-            <ProjectDetails project={project} setFetch={setFetch} />
+            <ProjectDetails
+              project={project}
+              setFetch={setFetch}
+              myUser={myUser}
+            />
           )}
           {tab === "Budget" && (
             <Budget project={project} setFetch={setFetch} myUser={myUser} />

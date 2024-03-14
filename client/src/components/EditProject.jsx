@@ -69,7 +69,7 @@ function EditProject({ project, setFetch }) {
         </svg>
       </div>
       {isModalOpen && (
-        <div className="fixed top-20 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50">
+        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div>
             <form
               className="bg-bg_white text-bg_dark_font rounded-md shadow-lg shadow-bg_light_section border-2 border-bg_dark_section p-7 flex flex-col justify-center items-center gap-2"
@@ -102,6 +102,23 @@ function EditProject({ project, setFetch }) {
                   onChange={handleChange}
                   className={"w-full border rounded-md py-2 px-3"}
                 />
+              </div>
+              <div className="mb-4 w-full">
+                <label className="mb-1" htmlFor="project_status">
+                  Project Status
+                </label>
+                <select
+                  id="project_status"
+                  name="project_status"
+                  value={formData.project_status}
+                  onChange={handleChange}
+                  className="w-full border rounded-md py-2 px-3"
+                >
+                  <option value="">Select </option>
+                  <option value="In progress">In progress</option>
+                  <option value="Completed">Completed</option>
+                  <option value="On hold">On hold</option>
+                </select>
               </div>
               <div className="mb-4 w-full">
                 <label className=" mb-1" htmlFor="project_scope">

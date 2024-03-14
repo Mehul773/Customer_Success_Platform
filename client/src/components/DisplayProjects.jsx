@@ -81,6 +81,9 @@ function DisplayProjects({ fetch, setFetch, myUser }) {
                         Project Description
                       </th>
                       <th scope="col" className="px-6 py-3">
+                        Status
+                      </th>
+                      <th scope="col" className="px-6 py-3">
                         Scope
                       </th>
                       <th scope="col" className="px-6 py-3">
@@ -105,7 +108,23 @@ function DisplayProjects({ fetch, setFetch, myUser }) {
                             {project.project_name}
                           </th>
                           <td className="px-6 py-4">{project.project_desc}</td>
+                          {project.project_status === "In progress" && (
+                            <td className="px-6 py-4 text-orange-500">
+                              {project.project_status}
+                            </td>
+                          )}
+                          {project.project_status === "On hold" && (
+                            <td className="px-6 py-4 text-red-500">
+                              {project.project_status}
+                            </td>
+                          )}
+                          {project.project_status === "Completed" && (
+                            <td className="px-6 py-4 text-green-500">
+                              {project.project_status}
+                            </td>
+                          )}
                           <td className="px-6 py-4">{project.project_scope}</td>
+
                           <td className="px-6 py-4">{project.project_stack}</td>
                           <td className="px-6 py-4 text-right flex gap-2 justify-center items-center">
                             <button onClick={() => download(project._id)}>

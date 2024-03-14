@@ -76,7 +76,7 @@ function EditAuditHistory({ auditHistory, setFetch, project }) {
             onSubmit={updateAuditHistory}
             className="bg-bg_white text-bg_dark_font rounded-md shadow-lg shadow-bg_light_section border-2 border-bg_dark_section p-7 flex flex-col justify-center items-center gap-1"
           >
-            <div className="mb-1 w-full">
+            {/* <div className="mb-1 w-full">
               <label className=" mb-1" htmlFor="dateOfAudit">
                 Date of Audit
               </label>
@@ -103,7 +103,7 @@ function EditAuditHistory({ auditHistory, setFetch, project }) {
                 onChange={handleChange}
                 className="w-full border rounded-md py-2 px-3"
               />
-            </div>
+            </div> */}
             <div className="mb-1 w-full">
               <label className="mb-2 " htmlFor="status">
                 Status

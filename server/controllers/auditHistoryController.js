@@ -28,8 +28,8 @@ const createAuditHistory = async (req, res, next) => {
     await projectDoc.save();
 
     //SEND EMAIL WHEN AUDIT IS CREATED
-    sendMailToAll(req, res);
-    // return res.status(200).json({ message: "AuditHistory created" });
+    // sendMailToAll(req, res);
+    return res.status(200).json({ message: "AuditHistory created" });
   } catch (error) {
     console.log(error);
     return res.json({ message: `Error occurred ${error}` });
@@ -56,11 +56,11 @@ const deleteAuditHistory = async (req, res, next) => {
     await AuditHistory.deleteOne({ _id: auditHistory_id });
 
     //SEND EMAIL WHEN AUDIT IS CREATED
-    sendMailToAll(req, res);
+    // sendMailToAll(req, res);
 
-    // return res
-    //   .status(200)
-    //   .json({ message: "AuditHistory deleted successfully" });
+    return res
+      .status(200)
+      .json({ message: "AuditHistory deleted successfully" });
   } catch (error) {
     console.log(error);
     return res.json({ message: `Error occurred ${error}` });
@@ -90,10 +90,10 @@ const editAuditHistory = async (req, res, next) => {
 
     await auditHistoryDoc.save();
     //SEND EMAIL WHEN AUDIT IS CREATED
-    sendMailToAll(req, res);
-    // return res
-    //   .status(200)
-    //   .json({ message: "AuditHistory edited successfully" });
+    // sendMailToAll(req, res);
+    return res
+      .status(200)
+      .json({ message: "AuditHistory edited successfully" });
   } catch (error) {
     console.log(error);
     return res.json({ message: `Error occurred ${error}` });

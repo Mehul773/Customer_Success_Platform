@@ -5,15 +5,14 @@ import "react-toastify/dist/ReactToastify.css";
 import { Button, Loader } from "monday-ui-react-core";
 import EditAuditHistory from "./EditAuditHistory";
 
-function AuditHistory({ project, setFetch }) {
+function AuditHistory({ project, setFetch, myUser }) {
   const [formData, setFormData] = useState({
-    dateOfAudit: "",
-    reviewedBy: "",
+    dateOfAudit: new Date().toJSON(),
+    reviewedBy: myUser?.email.split("@")[0],
     status: "",
     comment: "",
     actionItem: "",
   });
-
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {
@@ -85,16 +84,18 @@ function AuditHistory({ project, setFetch }) {
   return (
     <>
       {/* POP UP FOR ADD AUDIT HISTORY  */}
-      <Button onClick={openModal} className="m-2">
-        + Add Audit history
-      </Button>
+      {(myUser?.role === "Auditor" || myUser?.role === "Admin") && (
+        <Button onClick={openModal} className="m-2">
+          + Add Audit history
+        </Button>
+      )}
       {isModalOpen && (
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50">
           <form
             onSubmit={handleSubmit}
             className="bg-bg_white text-bg_dark_font rounded-md shadow-lg shadow-bg_light_section border-2 border-bg_dark_section p-7 flex flex-col justify-center items-center gap-1"
           >
-            <div className="mb-1 w-full">
+            {/* <div className="mb-1 w-full">
               <label className=" mb-1" htmlFor="dateOfAudit">
                 Date of Audit
               </label>
@@ -121,7 +122,7 @@ function AuditHistory({ project, setFetch }) {
                 onChange={handleChange}
                 className="w-full border rounded-md py-2 px-3"
               />
-            </div>
+            </div> */}
             <div className="mb-1 w-full">
               <label className="mb-2 " htmlFor="status">
                 Status
@@ -206,6 +207,7 @@ function AuditHistory({ project, setFetch }) {
             <th scope="col" className="px-6 py-3">
               Action Item
             </th>
+            <th scope="col" className="px-6 py-3"></th>
           </tr>
         </thead>
         <tbody>
@@ -225,17 +227,21 @@ function AuditHistory({ project, setFetch }) {
 
                 <td className="px-6 py-4 text-right flex gap-2">
                   {/* EDITSPRINT COMPONENT FOR POP UP  */}
-                  <EditAuditHistory
-                    auditHistory={auditHistory}
-                    setFetch={setFetch}
-                    project={project}
-                  />
-                  <button
-                    className="text-red-600"
-                    onClick={() => handleDelete(auditHistory._id)}
-                  >
-                    Delete
-                  </button>
+                  {(myUser?.role === "Auditor" || myUser?.role === "Admin") && (
+                    <>
+                      <EditAuditHistory
+                        auditHistory={auditHistory}
+                        setFetch={setFetch}
+                        project={project}
+                      />
+                      <button
+                        className="text-red-600"
+                        onClick={() => handleDelete(auditHistory._id)}
+                      >
+                        Delete
+                      </button>
+                    </>
+                  )}
                 </td>
               </tr>
             ))}
