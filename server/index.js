@@ -19,6 +19,7 @@ const matrixRoutes = require("./routes/matrixRoutes");
 const resourceRoutes = require("./routes/resourceRoutes");
 const clientFeedbackRoutes = require("./routes/clientFeedbackRoutes");
 const projectUpdateRoutes = require("./routes/projectUpdateRoutes");
+const momRoutes = require("./routes/momRoutes");
 
 /* CONTROLLER */
 const { sendMailToAll } = require("./controllers/emailController");
@@ -71,12 +72,14 @@ app.use("/matrix", matrixRoutes);
 app.use("/resource", resourceRoutes);
 app.use("/clientFeedback", clientFeedbackRoutes);
 app.use("/projectUpdate", projectUpdateRoutes);
+app.use("/mom", momRoutes);
 
 // CREATE ADMIN
 app.post("/admin", createAdmin);
 
 // SEND MAIL
 app.get("/send-mail/:project_id", sendMailToAll);
+
 // DOWNLOAD ALL CONTENT
 app.get("/download-pdf/:project_id", downloadAllContent);
 

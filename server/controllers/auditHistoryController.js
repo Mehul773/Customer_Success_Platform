@@ -28,7 +28,7 @@ const createAuditHistory = async (req, res, next) => {
     await projectDoc.save();
 
     //SEND EMAIL WHEN AUDIT IS CREATED
-    // sendMailToAll(req, res);
+    sendMailToAll(project_id);
     return res.status(200).json({ message: "AuditHistory created" });
   } catch (error) {
     console.log(error);
@@ -56,7 +56,7 @@ const deleteAuditHistory = async (req, res, next) => {
     await AuditHistory.deleteOne({ _id: auditHistory_id });
 
     //SEND EMAIL WHEN AUDIT IS CREATED
-    // sendMailToAll(req, res);
+    sendMailToAll(project_id);
 
     return res
       .status(200)
@@ -71,7 +71,7 @@ const deleteAuditHistory = async (req, res, next) => {
 const editAuditHistory = async (req, res, next) => {
   try {
     const { dateOfAudit, reviewedBy, status, comment, actionItem } = req.body;
-    const { auditHistory_id } = req.params;
+    const { auditHistory_id, project_id } = req.params;
     const auditHistoryDoc = await AuditHistory.findOne({
       _id: auditHistory_id,
     });
@@ -90,7 +90,7 @@ const editAuditHistory = async (req, res, next) => {
 
     await auditHistoryDoc.save();
     //SEND EMAIL WHEN AUDIT IS CREATED
-    // sendMailToAll(req, res);
+    sendMailToAll(project_id);
     return res
       .status(200)
       .json({ message: "AuditHistory edited successfully" });

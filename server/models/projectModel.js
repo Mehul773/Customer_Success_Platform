@@ -109,6 +109,12 @@ const ProjectSchema = new mongoose.Schema(
         ref: "ProjectUpdate",
       },
     ],
+    project_mom: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Mom",
+      },
+    ],
   },
   { timestamps: true, versionKey: false }
 );

@@ -1,5 +1,6 @@
 const User = require("../models/userModel");
 const Project = require("../models/projectModel");
+const { emailCreateUser } = require("./emailController");
 
 //CREATE ADMIN
 const createAdmin = async (req, res, next) => {
@@ -26,7 +27,6 @@ const createUser = async (req, res, next) => {
       role,
       email,
     });
-
     return res.status(200).json({ message: "User created " });
   } catch (error) {
     console.log(error);
@@ -139,6 +139,7 @@ const assignProject = async (req, res, next) => {
     projectDoc?.project_users?.push(userDoc._id);
     await userDoc.save();
     await projectDoc.save();
+    emailCreateUser(project_id);
     return res
       .status(200)
       .json({ message: "assign project to user successfully" });
