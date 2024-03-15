@@ -5,13 +5,13 @@ import "react-toastify/dist/ReactToastify.css";
 import { Button, Loader } from "monday-ui-react-core";
 import EditVersionHistory from "./EditVersionHistory";
 
-function VersionHistory({ project, setFetch }) {
+function VersionHistory({ project, setFetch, myUser }) {
   const [formData, setFormData] = useState({
     no: "",
     type: "",
     change: "",
     changeReason: "",
-    createdBy: "",
+    createdBy: myUser?.name || myUser?.email.split("@")[0],
     revisionDate: "",
     approvalDate: "",
     approvedBy: "",
@@ -91,9 +91,13 @@ function VersionHistory({ project, setFetch }) {
   return (
     <>
       {/* POP UP FOR ADD AUDIT HISTORY  */}
-      <Button onClick={openModal} className="m-2">
-        + Add Version history
-      </Button>
+      {(myUser?.role === "Admin" ||
+        myUser?.role === "PM" ||
+        myUser?.role === "Auditor") && (
+        <Button onClick={openModal} className="m-2">
+          + Add Version history
+        </Button>
+      )}
       {isModalOpen && (
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50">
           <form
@@ -167,7 +171,7 @@ function VersionHistory({ project, setFetch }) {
                 className="w-full border rounded-md py-2 px-3"
               />
             </div>
-            <div className="mb-1 w-full">
+            {/* <div className="mb-1 w-full">
               <label className="mb-2 " htmlFor="createdBy">
                 Created By
               </label>
@@ -180,7 +184,7 @@ function VersionHistory({ project, setFetch }) {
                 onChange={handleChange}
                 className="w-full border rounded-md py-2 px-3"
               />
-            </div>
+            </div> */}
             <div className="mb-1 w-full">
               <label className=" mb-1" htmlFor="revisionDate">
                 Revision Date
@@ -293,17 +297,23 @@ function VersionHistory({ project, setFetch }) {
 
                 <td className="px-6 py-4 text-right flex gap-2">
                   {/* EDITSPRINT COMPONENT FOR POP UP  */}
-                  <EditVersionHistory
-                    versionHistory={versionHistory}
-                    setFetch={setFetch}
-                    project={project}
-                  />
-                  <button
-                    className="text-red-600"
-                    onClick={() => handleDelete(versionHistory._id)}
-                  >
-                    Delete
-                  </button>
+                  {(myUser?.role === "Admin" ||
+                    myUser?.role === "PM" ||
+                    myUser?.role === "Auditor") && (
+                    <>
+                      <EditVersionHistory
+                        versionHistory={versionHistory}
+                        setFetch={setFetch}
+                        project={project}
+                      />
+                      <button
+                        className="text-red-600"
+                        onClick={() => handleDelete(versionHistory._id)}
+                      >
+                        Delete
+                      </button>
+                    </>
+                  )}
                 </td>
               </tr>
             ))}

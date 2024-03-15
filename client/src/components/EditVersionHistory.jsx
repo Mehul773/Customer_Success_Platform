@@ -146,7 +146,7 @@ function EditVersionHistory({ versionHistory, setFetch, project }) {
                 className="w-full border rounded-md py-2 px-3"
               />
             </div>
-            <div className="mb-1 w-full">
+            {/* <div className="mb-1 w-full">
               <label className="mb-2 " htmlFor="createdBy">
                 Created By
               </label>
@@ -159,7 +159,7 @@ function EditVersionHistory({ versionHistory, setFetch, project }) {
                 onChange={handleChange}
                 className="w-full border rounded-md py-2 px-3"
               />
-            </div>
+            </div> */}
             <div className="mb-1 w-full">
               <label className=" mb-1" htmlFor="revisionDate">
                 Revision Date
