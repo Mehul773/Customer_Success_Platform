@@ -23,6 +23,7 @@ import Resource from "../../components/Resource";
 import ClientFeedback from "../../components/ClientFeedback";
 import ProjectUpdate from "../../components/projectUpdate";
 import Mom from "../../components/Mom";
+import Team from "../../components/Team";
 
 function Project() {
   const { id } = useParams();
@@ -84,6 +85,7 @@ function Project() {
             <MyTab title={"Budget"} setTab={setTab} tab={tab} />
             <MyTab title={"Risk Profiling"} setTab={setTab} tab={tab} />
             <MyTab title={"Phases/Milestones"} setTab={setTab} tab={tab} />
+            <MyTab title={"Approved Team"} setTab={setTab} tab={tab} />
             <MyTab title={"Sprint wise detail"} setTab={setTab} tab={tab} />
             {(myUser.role === "Admin" || myUser.role === "Auditor") && (
               <MyTab title={"Stckholder"} setTab={setTab} tab={tab} />
@@ -185,6 +187,9 @@ function Project() {
           )}
           {tab === "MoM" && (
             <Mom project={project} setFetch={setFetch} myUser={myUser} />
+          )}
+          {tab === "Approved Team" && (
+            <Team project={project} setFetch={setFetch} myUser={myUser} />
           )}
         </div>
       )}

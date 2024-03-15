@@ -115,6 +115,12 @@ const ProjectSchema = new mongoose.Schema(
         ref: "Mom",
       },
     ],
+    project_team: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Team",
+      },
+    ],
   },
   { timestamps: true, versionKey: false }
 );

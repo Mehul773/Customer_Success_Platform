@@ -20,6 +20,7 @@ const resourceRoutes = require("./routes/resourceRoutes");
 const clientFeedbackRoutes = require("./routes/clientFeedbackRoutes");
 const projectUpdateRoutes = require("./routes/projectUpdateRoutes");
 const momRoutes = require("./routes/momRoutes");
+const teamRoutes = require("./routes/teamRoutes");
 
 /* CONTROLLER */
 const { sendMailToAll } = require("./controllers/emailController");
@@ -73,6 +74,7 @@ app.use("/resource", resourceRoutes);
 app.use("/clientFeedback", clientFeedbackRoutes);
 app.use("/projectUpdate", projectUpdateRoutes);
 app.use("/mom", momRoutes);
+app.use("/team", teamRoutes);
 
 // CREATE ADMIN
 app.post("/admin", createAdmin);
