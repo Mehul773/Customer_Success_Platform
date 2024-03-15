@@ -100,6 +100,7 @@ const CreateProject = ({ fetch, setFetch }) => {
               <option value="Frontend">Frontend</option>
               <option value="Mobile App">Mobile App</option>
               <option value="Database">Database</option>
+              <option value="Fullstack">Fullstack</option>
             </select>
           </div>
           <button

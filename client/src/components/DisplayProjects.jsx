@@ -8,6 +8,7 @@ import { FaEye } from "react-icons/fa";
 import { FaDownload } from "react-icons/fa";
 import { saveAs } from "file-saver";
 import Loader from "../components/Loader";
+import ProjectPieChart from "./ProjectPieChart";
 
 function DisplayProjects({ fetch, setFetch, myUser }) {
   const [projects, setProjects] = useState([]);
@@ -70,6 +71,7 @@ function DisplayProjects({ fetch, setFetch, myUser }) {
         <>
           {myUser && (
             <>
+            <h1 className="font-bold text-xl">Total Project: {projects.length}</h1>
               <div className=" overflow-x-auto shadow-md sm:rounded-lg">
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500 ">
                   <thead className="text-xs text-gray-700 uppercase bg-gray-50  ">
@@ -159,6 +161,7 @@ function DisplayProjects({ fetch, setFetch, myUser }) {
           )}
         </>
       )}
+      <ProjectPieChart projects={projects} fetch={fetch}/>
     </>
   );
 }

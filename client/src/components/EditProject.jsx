@@ -152,6 +152,7 @@ function EditProject({ project, setFetch }) {
                   <option value="Frontend">Frontend</option>
                   <option value="Mobile App">Mobile App</option>
                   <option value="Database">Database</option>
+                  <option value="Fullstack">Fullstack</option>
                 </select>
               </div>
               <div className="flex justify-center gap-2 w-full">
