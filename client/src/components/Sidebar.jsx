@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Link } from "monday-ui-react-core";
+import { Button } from "monday-ui-react-core";
 import { useNavigate } from "react-router-dom";
 
 function Sidebar() {

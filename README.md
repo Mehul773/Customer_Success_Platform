@@ -4,7 +4,9 @@
 ![image](https://github.com/Mehul773/Customer_Success_Platform/assets/114020671/e2822fe8-f990-46b8-bf50-d987f8959bc1)
 ![image](https://github.com/Mehul773/Customer_Success_Platform/assets/114020671/64822120-951d-4580-81fc-c49982813944)
 
+## Live Demo
 
+Access the live demo [here](https://ec2-3-110-223-48.ap-south-1.compute.amazonaws.com:3000/).
 
 ## Overview
 
@@ -24,14 +26,16 @@ The Customer Success Platform addresses several key objectives:
 ### Role Based Management
 
 #### Admin Role
-- **Credentials:** 
+
+- **Credentials:**
   - Email: admin2003@gmail.com
   - Password: Mehul@1234
 - Full access to create/update/read/delete all projects and sections.
 - Manage users (all stakeholders).
 
 #### Auditor Role
-- **Credentials:** 
+
+- **Credentials:**
   - Email: auditor2003@gmail.com
   - Password: Mehul@1234
 - Register using Microsoft credentials via Auth0.
@@ -40,11 +44,13 @@ The Customer Success Platform addresses several key objectives:
 - Add stakeholders and view platform for all projects.
 
 #### Project Manager Role
+
 - Register using Microsoft credentials via Auth0.
 - Manage content for assigned projects.
 - Save and submit updates for assigned projects.
 
 #### Other Stakeholders
+
 - View customer success platform for assigned projects.
 
 ### Email Notification System
@@ -84,4 +90,3 @@ For more details and documentation, visit our [GitHub repository](https://github
 ## Credits
 
 This project is developed by Mehul Chovatiya.
-

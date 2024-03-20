@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Button } from "monday-ui-react-core";
-import EditStackholder from "./EditStackholder";
 import { MdEmail } from "react-icons/md";
 import Loader from "../components/Loader";
 
@@ -115,12 +114,12 @@ function Stackholder({ project, setFetch }) {
         <Button onClick={openModal} className="m-2">
           + Add Stackholder
         </Button>
-        <Button className="m-2" color="positive" onClick={handleEmail}>
+        {/* <Button className="m-2" color="positive" onClick={handleEmail}>
           <div className="mx-2">
             <MdEmail />
           </div>
           Send project details to all cilent
-        </Button>
+        </Button> */}
       </div>
       {isModalOpen && (
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50">
